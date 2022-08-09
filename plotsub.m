@@ -1,4 +1,4 @@
-function plotsub(h_handle,gap,marg_h,marg_w)
+function ha_new=plotsub(h_handle,gap,marg_h,marg_w)
 
 %% Plot subfigure into new bigger figure
 %
@@ -10,6 +10,7 @@ function plotsub(h_handle,gap,marg_h,marg_w)
 %
 % Outputs:
 %
+
 %% 
 
 if nargin<4
@@ -32,7 +33,7 @@ else
     ha=h_handle;
 end
 
-%%
+%% Make new figure, copy content
 
 hfig_new=figure(); sizefig('m');
 

@@ -85,6 +85,16 @@ end
 axh = (1-gapspace_h-sum(marg_h)-(nh-1)*gap(1))/nh;  axh=axh.*nh.*weight_h;
 axw = (1-gapspace_w-sum(marg_w)-(nw-1)*gap(2))/nw; axw=axw.*nw.*weight_w;
 
+if any(axh<0)
+    axh
+    error('Height of subplot is negative');
+end
+
+if any(axw<0)
+    axw
+    error('Width of subplot is negative');
+end
+
 ha = zeros(nh*nw,1);
 ii = 0;
 
@@ -92,11 +102,10 @@ for ih = 1:nh
        for iw = 1:nw
         
         px = marg_w(1)+sum(gap_w(1:(iw-1)))+sum(axw(1:(iw-1)));
-        py = 1-(    marg_h(2)+sum(gap_h(1:(ih-1)))+sum(axh(1:(ih)))   );
+        py = 1-( marg_h(2)+sum(gap_h(1:(ih-1)))+sum(axh(1:(ih))) );
         
         ii = ii+1;
-        ha(ii) = axes('Units','normalized', ...
-            'Position',[px py axw(iw) axh(ih)]);
+        ha(ii) = axes('Units','normalized','Position',[px py axw(iw) axh(ih)]);
         
         Pos{ii}=[px py axw(iw) axh(ih)];
 

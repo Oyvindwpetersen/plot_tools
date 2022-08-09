@@ -1,6 +1,5 @@
 function S_coh=S2coh(S)
 
-
 %%
 
 S_coh=zeros(size(S));

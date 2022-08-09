@@ -84,7 +84,7 @@ nTime=nTime+1; t{nTime}=vararginSignalCell{1};
 
 for k=2:length(vararginSignalCell)
 
-	if size(vararginSignalCell{k},1)==1 & checkXaxis(vararginSignalCell{k})
+	if size(vararginSignalCell{k},1)==1 & checkxaxis(vararginSignalCell{k})
 		nTime=nTime+1; t{nTime}=vararginSignalCell{k};
 	else
 		nSources=nSources+1; x{nSources}=vararginSignalCell{k};	

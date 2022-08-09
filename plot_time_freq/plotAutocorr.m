@@ -83,7 +83,7 @@ nSources=0;
 nTau=nTau+1; tau{nTau}=vararginSignalCell{1};
 
 for k=2:length(vararginSignalCell)
-	if checkXaxis(vararginSignalCell{k})
+	if checkxaxis(vararginSignalCell{k})
 		nTau=nTau+1; tau{nTau}=vararginSignalCell{k};
 	else
 		nSources=nSources+1; x{nSources}=vararginSignalCell{k};	

@@ -1,4 +1,4 @@
-function xlimall(hfig,xlimit)
+function xlimall(varargin)
 
 %% Set xlimit to multiple axes
 %
@@ -8,7 +8,18 @@ function xlimall(hfig,xlimit)
 %
 % Outputs:
 %
-%% 
+%%
+
+if nargin==1
+    hfig=gcf;
+    xlimit=varargin{1};
+end
+
+if nargin==2
+    hfig=varargin{1};
+    xlimit=varargin{2};
+end
+
 
 if isnumeric(hfig)
     

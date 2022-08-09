@@ -1,5 +1,9 @@
 function axistightrangex(h_handle,x_range,type)
 
+
+warning('Consider using axistight.m instead')
+
+%%
 %%
 
 if nargin==2

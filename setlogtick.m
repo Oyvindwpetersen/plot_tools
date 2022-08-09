@@ -1,6 +1,6 @@
 function setlogtick(h_handle,ntick,var)
 
-%% Add cursor with information
+%% Set number of ticks for axis with exponents 10^ for log axis
 %
 % Inputs:
 % h_handle: handle to axes or figure
@@ -9,62 +9,60 @@ function setlogtick(h_handle,ntick,var)
 %
 % Outputs:
 %
-%% 
+
+%%
 
 if isfigure(h_handle)
-hax=getsortedaxes(h_handle);
+    hax=getsortedaxes(h_handle);
 else
-hax=h_handle;
+    hax=h_handle;
 end
 
 if ~iscell(var)
-var={var};
+    var={var};
 end
 
 %%
 
 for j=1:length(var)
-
-for k=1:length(hax)
-
-if strcmpi(var{j},'x')
-scaleName='XScale'; limName='xlim'; tickName='XTick';
-end
-
-if strcmpi(var{j},'y')
-scaleName='YScale'; limName='ylim'; tickName='YTick';
-end
-
-if strcmpi(var{j},'z')
-scaleName='ZScale'; limName='zlim'; tickName='ZTick';
-end
-
-if ~strcmpi(get(hax(k),scaleName),'log'); continue; end
-
-lim_log=log10(get(hax(k),limName));
-
-if lim_log(1)==-Inf; lim_log(1)==-10; end
-	
-lim_log=[ceil(lim_log(1)) floor(lim_log(2))];
-Nlog=[lim_log(1):lim_log(2)];
-
-if ~isempty(ntick)
-Nlog_plot=[Nlog(1):ceil(length(Nlog)/ntick):Nlog(end)];
-set(hax(k),tickName,10.^Nlog_plot);
-else
-
-if length(Nlog)<=3
-	Nlog_plot=Nlog;
-	set(hax(k),tickName,10.^Nlog_plot);
-elseif length(Nlog)<=6
-	Nlog_plot=[Nlog(1):2:Nlog(end)];
-	set(hax(k),tickName,10.^Nlog_plot);
-else
-	Nlog_plot=[Nlog(1):ceil(length(Nlog)/3):Nlog(end)];
-	set(hax(k),tickName,10.^Nlog_plot);
-end
-
-end
-
-end
+    
+    for k=1:length(hax)
+        
+        if strcmpi(var{j},'x')
+            scalename='XScale'; limname='xlim'; tickname='XTick';
+        elseif strcmpi(var{j},'y')
+            scalename='YScale'; limname='ylim'; tickname='YTick';
+        elseif strcmpi(var{j},'z')
+            scalename='ZScale'; limname='zlim'; tickname='ZTick';
+        end
+        
+        % If axis not log, continue
+        if ~strcmpi(get(hax(k),scalename),'log'); continue; end
+        
+        lim_log=log10(get(hax(k),limname));
+        if lim_log(1)==-Inf; lim_log(1)==-10; end
+        
+        lim_log=[ceil(lim_log(1)) floor(lim_log(2))];
+        
+        % Orders from lowest to highest
+        Nlog=[lim_log(1):lim_log(2)];
+        
+        if ~isempty(ntick)
+            Nlog_plot=[Nlog(1):ceil(length(Nlog)/ntick):Nlog(end)];
+        else
+            if length(Nlog)<=3
+                Nlog_plot=Nlog;
+            elseif length(Nlog)<=6
+                Nlog_plot=[Nlog(1):2:Nlog(end)];
+            else
+                ntick=3;
+                Nlog_plot=[Nlog(1):ceil(length(Nlog)/ntick):Nlog(end)];
+            end
+            
+        end
+        
+        % Set manual ticks
+        set(hax(k),tickname,10.^Nlog_plot);
+        
+    end
 end

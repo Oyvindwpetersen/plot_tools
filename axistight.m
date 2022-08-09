@@ -3,9 +3,26 @@ function axistight(H, P, varargin)
 %% axistight adjusts axis limits tight but not too tight
 %
 % Examples:
-% axistight(gca,[0 0.05],'x','y'); % tight on x-axis, some gap on y-axis
+% axistight(gca,[0 0.05],'x','y'); % tight on x-axis, small gap on y-axis
 % axistight(gca,[0.1 0.1 0.1],'x','y','z'); % ten percent gap on all axis limits
 %
+%
+% 'x': x-axis
+% 'y': y-axis
+% 'z': z-axis
+% '+x': positive part of x-axis
+% '+y': positive part of y-axis
+% '+z': positive part of z-axis
+% '-x': negative part of x-axis
+% '-y': negative part of y-axis
+% '-z': negative part of z-axis
+% 'xlog': log x-axis
+% 'ylog': log y-axis
+% 'zlog': log z-axis
+% 'ylog2': log y-axis, y-data within current x-range
+% 'x0': x-axis, keep lower limit zero
+% 'y0': y-axis, keep lower limit zero
+
 % Inputs:
 % H: axis handle 
 % P: vector with ratios for axis
@@ -42,15 +59,14 @@ if nargin < 2, P = 0.05; end
 if isempty(varargin), varargin = {'y'}; end
 
 for ii = 1:length(varargin)
-  switch varargin{ii}
-       	case 'ylog2'; xlim_current=get(H,'xlim'); 
+	switch varargin{ii}
+        case 'ylog2'; xlim_current=get(H,'xlim'); 
        	case '+ylog2'; xlim_current=get(H,'xlim');
        	case '-ylog2'; xlim_current=get(H,'xlim');
        	case 'keepx'; xlim_current=get(H,'xlim');
        	case 'keepy'; ylim_current=get(H,'ylim');
        	case 'keepz'; zlim_current=get(H,'zlim');
-
-  end
+	end
 end
 
 axis(H,'tight');
@@ -65,7 +81,7 @@ for ii = 1:length(varargin)
     case 'y'
       set_tight_axis('ylim',P(ii));
     case 'z'
-		Pz=P(3);
+        Pz=P(3);
       set_tight_axis('zlim',P(ii));
     case '+x'
       set_tight_positive('xlim',P(ii));
@@ -102,7 +118,6 @@ for ii = 1:length(varargin)
   end
 end
 
-
 for ii = 1:length(varargin)
   switch varargin{ii}
        	case 'keepx'; set(H,'xlim',xlim_current);
@@ -110,8 +125,6 @@ for ii = 1:length(varargin)
        	case 'keepz'; set(H,'zlim',zlim_current);
   end
 end
-
-
 
 %% 
 
@@ -226,8 +239,8 @@ end
     min_y(min_y==0)=[];
     max_y(max_y==Inf)=[];
     
-    if isempty(min_y); ylim_current=get(H,'ylim'); min_y=ylim_current(1); end
-    if isempty(max_y); ylim_current=get(H,'ylim'); max_y=ylim_current(2); end
+    if isempty(min_y); ylim_curr=get(H,'ylim'); min_y=ylim_curr(1); end
+    if isempty(max_y); ylim_curr=get(H,'ylim'); max_y=ylim_curr(2); end
         
     min_y_all=min(min_y);
     max_y_all=max(max_y);

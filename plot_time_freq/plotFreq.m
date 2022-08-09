@@ -75,7 +75,7 @@ nTime=nTime+1; t{nTime}=vararginSignalCell{1};
 
 for k=2:length(vararginSignalCell)
     
-	if size(vararginSignalCell{k},1)==1 & checkXaxis(vararginSignalCell{k})
+	if size(vararginSignalCell{k},1)==1 & checkxaxis(vararginSignalCell{k})
 		nTime=nTime+1; t{nTime}=vararginSignalCell{k};
 	else
 		nSources=nSources+1; x{nSources}=vararginSignalCell{k};	
@@ -196,7 +196,7 @@ end
 
 for k=1:nFig
 nSub(k)=length(range{k});
-figure(k-1+figNoNew); makebig();
+figure(k-1+figNoNew); sizefig();
 ha{k} = tight_subplot(nSub(k),1,gap,marg_h,marg_w); 
 
 % axes('Position',[0 0 1 1],'Visible','off');

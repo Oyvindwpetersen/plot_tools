@@ -95,7 +95,7 @@ nSources=0;
 nFreq=nFreq+1; f{nFreq}=vararginSignalCell{1};
 
 for k=2:length(vararginSignalCell)
-	if checkXaxis(vararginSignalCell{k})
+	if checkxaxis(vararginSignalCell{k})
 		nFreq=nFreq+1; f{nFreq}=vararginSignalCell{k};
 	else
 		nSources=nSources+1; x{nSources}=vararginSignalCell{k};	
@@ -321,7 +321,7 @@ end
 
 end
 
-function sizefigFig(source,event);
+function sizefigFig(source,event)
 
 [f_new hax_new]=copyFigContent(gca);
 sizefig('m');
@@ -331,9 +331,9 @@ btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
         'Callback', {@makeLogAxes hax_new}); 
     
 
-end	
+end
 
-function makeLogAxes(source,even,ha);
+function makeLogAxes(source,even,ha)
 
 if sqrt(length(ha))==round(sqrt(length(ha))); diagonalOnly=true; else; diagonalOnly=false; end
 
@@ -357,7 +357,7 @@ for k=1:length(indexAxes);
     
 end
 
-end	
+end
 
 
 %%

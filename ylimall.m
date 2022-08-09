@@ -8,7 +8,7 @@ function ylimall(hfig,ylimit)
 %
 % Outputs:
 %
-%% 
+%%
 
 if isnumeric(hfig)
     

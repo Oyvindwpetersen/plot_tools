@@ -1,11 +1,11 @@
 function logpos(ha,var,range)
 
-%% Scale axis in so that data values falls between A and B
+%% Scale axis in so that data values falls between positive values A and B
 %
 % Inputs:
 % ha: axes handle
-% var: select axis, 'x' or 'y' or 'z'
-% range: [lower upper]
+% var: axis, 'x' or 'y' or 'z'
+% range: values, [lower upper]
 %
 % Outputs:
 %
@@ -56,14 +56,14 @@ if strcmpi(var,'unknown')
     end
 end
 
-% get data values from all objects
+% Get data values from all objects
 Data_var = get(O,[var 'Data']);
 
 if ~iscell(Data_var)
 	Data_var = {Data_var};
 end
 
-% single vector of values
+% Single vector of values
 Data_all = cellfun(@(x) x(:)', Data_var, 'uniformoutput',0);
 Data_all = [Data_all{:}];
 

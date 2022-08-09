@@ -1,13 +1,21 @@
 function  bar3z(A,varargin )
 
-%% INPUT HANDLING
+%% Find available figure number to avoid collision
+%
+% Inputs:
+% A: matrix to plot as bars
+%
+% Outputs:
+% 
+%
+
+%% Default inputs
+
 p=inputParser;
 % p.KeepUnmatched=true;
 
 addParameter(p,'YTickLabel','',@iscell)
 addParameter(p,'XTickLabel','',@iscell)
-% addParameter(p,'XTickLabel','',@iscell)
-% addParameter(p,'YTickLabel','',@iscell)
 addParameter(p,'xlabel','Column',@ischar)
 addParameter(p,'ylabel','Row',@ischar)
 addParameter(p,'TickLabelFontSize',6,@isnumeric)
@@ -17,12 +25,12 @@ parse(p,varargin{:})
 
 XTickLabel=p.Results.XTickLabel;
 YTickLabel=p.Results.YTickLabel;
-% YTickLabel=p.Results.YTickLabel;
-% XTickLabel=p.Results.XTickLabel;
 xl=p.Results.xlabel;
 yl=p.Results.ylabel;
 TickLabelFontSize=p.Results.TickLabelFontSize;
 logaxis=p.Results.log;
+
+%%
 
 bar3c(A);
 
@@ -35,14 +43,6 @@ end
 if isempty(XTickLabel)
 	XTickLabel=strseq('x',[1:n2])';
 end
-
-% if n2==2*length(XTickLabel);
-%     XTickLabel={XTickLabel{1:end} XTickLabel{1:end}};
-% end
-% 
-% if n1==2*length(YTickLabel);
-%     YTickLabel={YTickLabel{1:end} YTickLabel{1:end}};
-% end
 
 set(gca,'XTick',[1:n2]);
 set(gca,'YTick',[1:n1]);
@@ -58,17 +58,10 @@ xlabel(xl);
 axistight(gca,[0.05 0.05 0.05],'x','y','z')
 view([-25 35]);
 
-if strcmpi(logaxis,'yes');
+if strcmpi(logaxis,'yes')
     set(gca,'ZScale','log');
     axistight(gca,[0 0 0.05],'keepx','keepy','zlog');
 end
-
-% h = get(gcf,'Children');
-% set(h(1),'XTickLabelRotation',90);
-
-% a = get(gca,'XTickLabel');
-% set(gca,'XTickLabel',a,'FontName','Times','fontsize',18)
-
 
 dcm=datacursormode(gcf);
 datacursormode on
