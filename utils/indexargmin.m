@@ -8,8 +8,7 @@ function [ind dist]=indexargmin(x,x_val)
 
 % Outputs:
 % ind: closest index
-% dist: distances/residuals
-
+% dist: distances (residuals)
 
 %%
 

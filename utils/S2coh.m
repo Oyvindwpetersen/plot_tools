@@ -1,5 +1,13 @@
 function S_coh=S2coh(S)
 
+%% Normalize spectral density to coherence
+% 
+% Inputs:
+% S: spectral density matrix
+%
+% Outputs:
+% S_coh: coherence matrix
+%
 %%
 
 S_coh=zeros(size(S));

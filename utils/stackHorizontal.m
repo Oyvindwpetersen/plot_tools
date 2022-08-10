@@ -2,16 +2,23 @@ function A=stackHorizontal(varargin)
 
 %% Function to stack matrices horizontally
 % Matrix sizes must be equally tall
-
+%
+% Inputs:
+% cell or repeated arguments
+%
+% Outputs:
+% A: resulting matrix
+%
+%
 % Examples: 
 % A=randn(3,3);
 % B=randn(3,1);
 % C=stackHorizontal(A,B)
-
+%
 % D{1}=randn(3,3);
 % D{2}=randn(3,1);
 % C=stackHorizontal(D)
-
+%
 %%
 
 if nargin==1 & isempty(varargin{1})
@@ -40,8 +47,8 @@ if isempty(stackCells)
     A=[]; return
 end
 
-if any(s1(1)~=s1);
-    error('Matrix size');
+if any(s1(1)~=s1)
+    error('Matrix size not matching for stacking');
 end
 
 if all(s_sparse)
