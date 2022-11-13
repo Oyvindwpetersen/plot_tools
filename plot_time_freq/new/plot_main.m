@@ -15,6 +15,7 @@ addParameter(p,'LineStyle',{},@iscell)
 addParameter(p,'LineWidth',[],@isnumeric)
 addParameter(p,'xlabel',{})
 addParameter(p,'ylabel',{})
+addParameter(p,'fontsize',8,@isnumeric)
 addParameter(p,'interpreter','none',@ischar)
 
 addParameter(p,'nh',[6],@isnumeric)
@@ -26,14 +27,12 @@ addParameter(p,'marg_w',[.05 .025],@isnumeric)
 addParameter(p,'comp',[],@isnumeric)
 addParameter(p,'cut',[],@isnumeric)
 
-addParameter(p,'log','no',@ischar)
+addParameter(p,'log',false,@islogical)
 addParameter(p,'button','on',@ischar)
-addParameter(p,'component',[],@isnumeric)
 addParameter(p,'type','all',@ischar)
 addParameter(p,'xlim',[],@isnumeric)
-addParameter(p,'xzoom',[],@isnumeric)
-
-addParameter(p,'plotdim',2,@isnumeric)
+% addParameter(p,'xzoom',[],@isnumeric)
+addParameter(p,'complexdata',false,@islogical)
 
 parse(p,varargin{1:end});
 
@@ -47,6 +46,7 @@ LineStyle=p.Results.LineStyle;
 LineWidth=p.Results.LineWidth;
 x_labels=p.Results.xlabel;
 y_labels=p.Results.ylabel;
+fontsize=p.Results.fontsize;
 interpreter=p.Results.interpreter;
 
 nh=p.Results.nh;
@@ -60,20 +60,17 @@ cut=p.Results.cut;
 
 log=p.Results.log;
 button=p.Results.button;
-comp=p.Results.comp;
 type=p.Results.type;
 xlimit=p.Results.xlim;
-xzoom=p.Results.xzoom;
-
-plotdim=p.Results.plotdim;
+% xzoom=p.Results.xzoom;
+complexdata=p.Results.complexdata;
 
 %%
 
-nSignals=length(y);
-nSources=size(y{1},1);
+nSignals=size(y{1},1);
+nSources=length(y);
 
-[x,y,nSignals]=compcut(x,y,comp,cut,plotdim);
-
+[x,y,nSignals]=compcut(x,y,comp,cut);
 
 %%
 
@@ -94,16 +91,38 @@ if isempty(LineStyle)
     LineStyle=repcell('-',1,30);
 end
 
+if ~iscell(LineStyle)
+    LineStyle={LineStyle};
+end
+
 if isempty(Marker)
     Marker=repcell('none',1,30);  
+end
+
+if ~iscell(Marker)
+    Marker={Marker};
 end
 
 if isempty(Displayname)
 	Displayname=strseq('',[1:nSources]);
 end
 
+if ~iscell(Displayname)
+    Displayname={Displayname};
+end
+
 if ischar(x_labels)
     x_labels={x_labels};
+end
+
+if length(x_labels)~=nSignals
+   if length(x_labels)==1
+      x_labels=repcell(x_labels{1},1,nSignals);
+   else
+      nSignals
+      x_labels
+      error('Length of xlabels incorrect');
+   end
 end
 
 if isempty(x_labels)
@@ -132,11 +151,14 @@ for j=1:nSources
     
     plotopt_all{j}=plotopt;
     
+	plotopt_all{j}=lowerstruct(plotopt_all{j});
+
 end
 
 axesopt=struct();
 axesopt.xlabel=x_labels;
 axesopt.ylabel=y_labels;
+axesopt.fontsize=fontsize;
 axesopt.interpreter=interpreter;
 axesopt.xlimit=xlimit;
 
@@ -147,15 +169,12 @@ axesopt.gap=gap;
 axesopt.marg_h=marg_h;
 axesopt.marg_w=marg_w;
 axesopt.log=log;
+axesopt.complexdata=complexdata;
 
 figopt=struct();
 figopt.button=button;
 
-if plotdim==2
-    [ha,hp]=plot2d(x,y,nSignals,nSources,nw,nh,plotopt_all,axesopt,figopt);
-elseif plotdim==3
-    [ha,hp]=plot3d(x,y,nSignals,nSources,nw,nh,plotopt_all,axesopt,figopt);
-end
+[ha,hp]=plot2d(x,y,nw,nh,plotopt_all,axesopt,figopt);
 
 %%
 

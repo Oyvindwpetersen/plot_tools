@@ -1,8 +1,13 @@
-function [ha,hp]=plot2d(x,y,nSignals,nSources,nw,nh,plotopt_all,axesopt,figopt)
+function [ha,hp]=plot2d(x,y,nw,nh,plotopt_all,axesopt,figopt)
 
 %%
 
-range=rangebin(nSignals,nh*nw); %number of subplots per figure;
+nSignals=size(y{1},1);
+nSources=length(y);
+
+%%
+
+range=rangebin(nSignals,nh*nw);
 nFig=length(range);
 
 [figno_new,figno_taken]=availablefigno(1,100,nFig);
@@ -19,23 +24,39 @@ for k=1:nFig
     figure(k-1+figno_new); sizefig();
     ha{k}=tight_subplot(n1,n2,axesopt.gap,axesopt.marg_h,axesopt.marg_w); 
 
-    for kk=1:(n1*n2)
+    for kk=1:length(range{k}) %(n1*n2)
+        
+        signalNo=range{k}(kk);
+                
         axesfast( ha{k}(kk) ); hold on; grid on;
 
-        signalNo=range{k}(kk);
-        for j=1:nSources
-            hp{k}(kk,j)=plot(x{j},y{j}(signalNo,:),plotopt_all{j});
+        if axesopt.complexdata==false
+            for j=1:nSources
+                hp{k}(kk,j)=plot(x{j},y{j}(signalNo,:),plotopt_all{j});
+            end
+        else
+            for j=1:nSources
+                
+                plotopt_all_re{j}=plotopt_all{j}; plotopt_all_re{j}.displayname= ['Re(' plotopt_all{j}.displayname ')'];
+                plotopt_all_im{j}=plotopt_all{j}; plotopt_all_im{j}.displayname= ['Im(' plotopt_all{j}.displayname ')']; plotopt_all_im{j}.linestyle='--';                
+                
+                hp{k}(kk,j)=plot(x{j},real(y{j}(signalNo,:)),plotopt_all_re{j});
+                hp{k}(kk,j+nSources)=plot(x{j},imag(y{j}(signalNo,:)),plotopt_all_im{j});
+            end
+            
         end
 
-        xlabel(axesopt.xlabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',8);
-        ylabel(axesopt.ylabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',8);
         
-        if strcmpi(axesopt.log,'yes')
+        xlabel(axesopt.xlabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',axesopt.fontsize);
+        ylabel(axesopt.ylabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',axesopt.fontsize);
+        
+        if axesopt.log==true
             set(gca,'yscale','log');
             if ~isempty(axesopt.xlimit); xlim(axesopt.xlimit); end
-            axistight(gca,[0.05],'ylog2');   
+            axistight(gca,[0.05],'ylog2');  
         else
         	axistight(gca,[0 0.05],'x','y');
+            if ~isempty(axesopt.xlimit); xlim(axesopt.xlimit); end
         end
 
     end
@@ -48,14 +69,14 @@ for k=1:nFig
     
     if strcmpi(figopt.button,'on') | strcmpi(figopt.button,'yes')
         % Create push button
-        btnSize = uicontrol('Style', 'pushbutton', 'String', 'Big',...
+        btnPlotSub = uicontrol('Style', 'pushbutton', 'String', 'Big',...
                 'Position', [20 20 50 20],...
-                'Callback', {@plotsubbutton }); 
+                'Callback', {@buttonplotsub }); 
 
         % Create push button
-        btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
+        btnLogScale = uicontrol('Style', 'pushbutton', 'String', 'Log',...
                 'Position', [20 0 50 20],...
-                'Callback', {@logscalebutton ha}); 
+                'Callback', {@buttonlogscale ha}); 
 	end
 
 end

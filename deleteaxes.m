@@ -6,7 +6,8 @@ function ha=deleteaxes(ha,no)
 % ha: vector with handle to axes
 % no: vector numbers to delete
 %
-% Outputs:
+% Outputs: 
+% ha: reduced vector with handle to axes
 %
 %%
 

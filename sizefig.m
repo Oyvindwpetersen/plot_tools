@@ -5,7 +5,7 @@ function sizefig(size_arg)
 % Inputs:
 % size_arg: 'b' 'm' 's' for big, small or medium (default big);
 %
-% Outputs:
+% Outputs: none
 %
 %% Set new size
 

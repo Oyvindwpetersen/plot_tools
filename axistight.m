@@ -28,17 +28,24 @@ function axistight(H, P, varargin)
 % P: vector with ratios for axis
 % [varargin]: strings with axis labels
 %
-%
 % Outputs: none
 %
 % Based on the script by (Copyright (c) 2010 Will Robertson, wspr 81 at gmail dot com)
 % Modified by OWP
-
+%
 %%
+
+
+% Default values
+if nargin < 1, H = gca; end
+if nargin < 2, P = 0.05; end
+if nargin < 3, varargin = {'y'}; end
+
+if isempty(varargin), varargin = {'y'}; end
 
 % if H is a figure, run for all axes in figure
 if strcmpi(get(H,'Type'),'figure')
-    hax=findall(h,'type','axes');
+    hax=findall(H,'type','axes');
     for k=1:length(hax)
     axistight(hax(k),P,varargin{:});
     end
@@ -52,11 +59,6 @@ if length(H)>1
     end
     return
 end
-
-% Default values
-if nargin < 1, H = gca; end
-if nargin < 2, P = 0.05; end
-if isempty(varargin), varargin = {'y'}; end
 
 for ii = 1:length(varargin)
 	switch varargin{ii}
@@ -113,8 +115,8 @@ for ii = 1:length(varargin)
       set_tight_y0('ylim',P(ii));
  	case 'yfixed'
       set_tight_yfixed('ylim',P(ii));
-    otherwise
-      error('Only ''x'' or ''y'' or ''z'' axes allowed.')
+%     otherwise
+%       error('Only ''x'' or ''y'' or ''z'' axes allowed.')
   end
 end
 
@@ -213,7 +215,7 @@ end
 	if length(Pax)==1; Pax=Pax*[1 1]; end
       
 	HgetChildren=get(H,'Children'); 
-
+    
     for k=1:size(HgetChildren,1)
         
         htype=get(HgetChildren(k),'type');
@@ -246,6 +248,8 @@ end
     max_y_all=max(max_y);
     
     lim_range=log10(max_y_all)-log10(min_y_all);
+    
+    if lim_range==0; lim_range=min_y_all*0.05; end
     
     lim = 10.^[log10(min_y_all)-Pax(1)*lim_range log10(max_y_all)+Pax(2)*lim_range];
     

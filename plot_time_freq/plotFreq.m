@@ -257,44 +257,46 @@ end
 % Create push button
 btnBig = uicontrol('Style', 'pushbutton', 'String', 'Big',...
         'Position', [20 20 50 20],...
-        'Callback', {@makeBigFig }); 
+        'Callback', {@buttonplotsub }); 
     
 % Create push button
 btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
         'Position', [20 0 50 20],...
-        'Callback', {@makeLogAxes ha{k}}); 
+        'Callback', {@buttonlogscale ha}); 
 % end
 
 
-end
+
 
 end
 
-function makeBigFig(source,event);
+end
 
-[f_new hax_new]=copyFigContent(gca);
-sizefig('m');
+% function makeBigFig(source,event);
 
-btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
-        'Position', [20 10 50 20],...
-        'Callback', {@makeLogAxes hax_new}); 
-end	
+% [f_new hax_new]=copyFigContent(gca);
+% sizefig('m');
 
-function makeLogAxes(source,event,ha);
+% btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
+        % 'Position', [20 10 50 20],...
+        % 'Callback', {@makeLogAxes hax_new}); 
+% end	
 
-isLog=strcmpi(get(gca,'YScale'),'log');
+% function makeLogAxes(source,event,ha);
 
-for k=1:length(ha);
+% isLog=strcmpi(get(gca,'YScale'),'log');
+
+% for k=1:length(ha);
     
-    if isLog
-    set(ha(k),'YScale','linear');
-    else
-    set(ha(k),'YScale','log');        
-    end
+    % if isLog
+    % set(ha(k),'YScale','linear');
+    % else
+    % set(ha(k),'YScale','log');        
+    % end
     
-end
+% end
 
-end	
+% end	
 
 
 

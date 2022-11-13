@@ -19,7 +19,7 @@ function tilefigs(tile,left_or_right,figno,gap,border_h,border_w)
 %
 % Based on the script by (Charles Plum)
 % Modified by OWP
-
+%
 %% Input check
 
 if nargin<1

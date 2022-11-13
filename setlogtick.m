@@ -7,9 +7,8 @@ function setlogtick(h_handle,ntick,var)
 % ntick: number of ticks
 % var: 'x' or 'y' or 'z'
 %
-% Outputs:
+% Outputs: none
 %
-
 %%
 
 if isfigure(h_handle)

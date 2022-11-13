@@ -4,8 +4,6 @@ clc
 clear all
 close all
 
-
-
 MainDir='C:\Cloud\OD_OWP\Work\Matlab\Github\plot_tools\'
 
 SubDir={'plot_time_freq' 'utils' };

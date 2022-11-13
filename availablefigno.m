@@ -10,7 +10,6 @@ function [figno_new,figno_taken]=availablefigno(figno_desired,fig_increment,n_re
 % Outputs:
 % figno_new: available figure (base) number
 %
-%
 %% Default inputs
 
 if nargin<3
@@ -40,7 +39,7 @@ for k=1:length(figHandles)
 end
 
 % Range 
-figno_test=figno_desired+[1:n_required];
+figno_test=figno_desired+[1:n_required]-1;
 
 % Loop until range is available
 figno_istaken=true;
@@ -48,7 +47,7 @@ while figno_istaken
 
 	do_add=false;
 	for k=1:length(figno_test)
-		if any(figno_test(k)==figno_taken);
+		if any(figno_test(k)==figno_taken)
 			do_add=true;
 		end
 	end

@@ -70,16 +70,16 @@ end
 %%
 
 if ischar(h_handle)
-   if strcmpi(h_handle,'all')
-   h_handle = findobj('Type', 'figure');
-   end
+    if strcmpi(h_handle,'all')
+        h_handle = findobj('Type', 'figure');
+    end
 end
 
 if strcmp(get(h_handle(1),'type'),'axes')
     hax=h_handle;
 elseif strcmp(get(h_handle(1),'type'),'figure')
     for k=1:length(h_handle)
-    hax_k{k}=getsortedaxes(h_handle(k));
+        hax_k{k}=getsortedaxes(h_handle(k));
     end
     hax=stackHorizontal(hax_k);
 end
@@ -87,34 +87,33 @@ end
 %%
 
 for k=1:length(hax)
-
-xLim=get(hax(k),'xlim');
-yLim=get(hax(k),'ylim');
-
-
-leg=get(hax(k),'legend');
-if ~isempty(leg)
-set(leg,'AutoUpdate','off');
-end
-
-x_plot(1,:)=x;
-h{k}=line(repmat(x_plot,2,1),repmat(yLim.',1,length(x)),'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'Parent',hax(k),'Tag','linevertical');
-uistack(h{k},stack);
-
-% Turn off legend
-if hideleg==true
-    h_anno=get(h{k},'Annotation');
-    if iscell(h_anno)
-
-        for j=1:length(h_anno)
-        set(get(h_anno{j},'LegendInformation'),'IconDisplayStyle','off');
-        end
-
-    else
-        set(get(h_anno,'LegendInformation'),'IconDisplayStyle','off');
+    
+    xLim=get(hax(k),'xlim');
+    yLim=get(hax(k),'ylim');
+    
+    leg=get(hax(k),'legend');
+    if ~isempty(leg)
+        set(leg,'AutoUpdate','off');
     end
-end
-
+    
+    x_plot(1,:)=x;
+    h{k}=line(repmat(x_plot,2,1),repmat(yLim.',1,length(x)),'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'Parent',hax(k),'Tag','linevertical');
+    uistack(h{k},stack);
+    
+    % Turn off legend
+    if hideleg==true
+        h_anno=get(h{k},'Annotation');
+        if iscell(h_anno)
+            
+            for j=1:length(h_anno)
+                set(get(h_anno{j},'LegendInformation'),'IconDisplayStyle','off');
+            end
+            
+        else
+            set(get(h_anno,'LegendInformation'),'IconDisplayStyle','off');
+        end
+    end
+    
 end
 
 

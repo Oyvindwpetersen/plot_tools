@@ -5,7 +5,7 @@ function minimizefig(fig_handle)
 % Inputs:
 % fig_handle: figure handle(s)
 %
-% Outputs:
+% Outputs: none
 %
 %% 
 

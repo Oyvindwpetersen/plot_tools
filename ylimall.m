@@ -6,25 +6,18 @@ function ylimall(hfig,ylimit)
 % hfig: figure handleor figure number
 % ylimit: [lower, upper] limit
 %
-% Outputs:
+% Outputs: none
 %
 %%
 
-if isnumeric(hfig)
-    
-    for j=1:length(hfig)
-        ha=getsortedaxes(figure(hfig(j)));
-        for k=1:length(ha)
-            axesfast(ha(k));
-            ylim(ylimit);
-        end
-    end
-    
-else
-    ha=getsortedaxes(hfig);
-    for k=1:length(ha)
-        axesfast(ha(k));
-        ylim(ylimit);
-        
-    end
+if nargin==1
+    hfig=gcf;
+    var_limit=varargin{1};
 end
+
+if nargin==2
+    hfig=varargin{1};
+    var_limit=varargin{2};
+end
+
+limall('y',var_limit,hfig);

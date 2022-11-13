@@ -5,10 +5,8 @@ function  bar3z(A,varargin )
 % Inputs:
 % A: matrix to plot as bars
 %
-% Outputs:
+% Outputs: none
 % 
-%
-
 %% Default inputs
 
 p=inputParser;

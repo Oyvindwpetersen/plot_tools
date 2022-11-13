@@ -1,26 +1,30 @@
-function [x,y,nSignals,nSources]=separatexy(data_cell,plotdim)
-
-%%
-
-% xLabels='';
-
+function [x,y,nSignals,nSources]=separatexy(data_cell)
+%% Separate x and y data for plotting
+% 
+% Inputs:
+% data_cell: cell on the form {x,y1,y2,y3,...} (shared x-axis) or {x1,y1,x2,y2,x3,y3,...} (individual x-axis) 
+%
+% Outputs:
+% x: cell on the form {x1,x2,x3,...} 
+% y: cell on the form {y1,y2,y3,...} 
+% nSignals: number of signals (size of y1)
+% nSources: number of sources (length of y)
+%
 %%
 
 one_x_axis=false;
 
 if length(data_cell)==1 % One input only, no x-axis provided
     one_x_axis=NaN;
-elseif any(length(data_cell)==[3:2:21]) % Odd means that one x-axis is present
+elseif any(length(data_cell)==[3:2:21]) % Odd input means that one x-axis is present
     one_x_axis=true;
 else
     
     is_x_axis=[];
     for k=1:length(data_cell)
         
+        % Assume true
         is_x_axis(k)=true;     
-        
-        % Matrix dimension larger than 1?
-        if min(size(data_cell{k}))>1; is_x_axis(k)=false; continue; end
         
         if checkxaxis(data_cell{k})==false; is_x_axis(k)=false; continue; end
             
@@ -29,8 +33,8 @@ else
     if sum(is_x_axis)>1 % Multiple x-axis
         one_x_axis=false;
     elseif sum(is_x_axis)==1 % One x-axis
-        one_x_axis=true; % No x-axis
-	elseif sum(is_x_axis)==0
+        one_x_axis=true; 
+	elseif sum(is_x_axis)==0 % No x-axis
         warning('No x-axis detected');
         one_x_axis=NaN;
     end
@@ -64,25 +68,35 @@ elseif isnan(one_x_axis)
         y{k}=data_cell{k};
     end
     
-% 	xLabels='Datapoints [n]';
-
 end
 
 nSignals=size(y{1},1);
 
 for k=1:nSources
-    if size(y{k},1)~=nSignals
+    
+    size_y_rows(k)=size(y{k},1);
+    
+    if size_y_rows(k)~=nSignals
         nSignals
-        size(y{k})
+        size_y_rows
         error(['Size wrong: number of sources not the same' ', k=' num2str(k)]);
     end
+    
 end
 
 for k=1:nSources
-    if size(y{k},plotdim)~=length(x{k})
-        size(x{k})
-        size(y{k})
+    
+    if size(y{k},3)>1
+        dim=3;
+    else
+        dim=2;
+    end
+    
+    if size(y{k},dim)~=length(x{k})
+        size_x=size(x{k})
+        size_y=size(y{k})
         error(['Size wrong: x-axis length not same size as y-data' ', k=' num2str(k)]);
     end
+    
 end
 

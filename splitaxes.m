@@ -6,10 +6,10 @@ function ha_new=splitaxes(ha_split,direction,gap_h,gap_w)
 % direction: 'vertical' or 'horizontal'
 % gap_h: gap between axis for vertical case
 % gap_w: gap between axis for horizontal case
-
+%
 % Outputs:
 % ha_new: axis handle to new axes
-
+%
 %%
 
 PositionOriginal=get(ha_split,'Position');

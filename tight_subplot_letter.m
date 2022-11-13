@@ -4,7 +4,7 @@ function tight_subplot_letter(ha,fontsize,p_in)
 %
 % Inputs:
 % ha: axes handle
-% fontsize: size
+% fontsize: size of letters
 % p_in: [dx,dy] adjustment
 %
 % Outputs:
@@ -20,7 +20,7 @@ if nargin==2
 end
 
 if isfigure(ha)
-    ha=getSortedAxes(ha);
+    ha=getsortedaxes(ha);
 end
 
 if ~iscell(ha)

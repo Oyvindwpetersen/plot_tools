@@ -190,7 +190,7 @@ for n=1:nSignals
             axesfast(ha(kk)); hold on; grid on;
             
             for j=1:nSources
-            x_plot=squeeze(x{j}(n,m,:));
+            x_plot=squeeze(x{j}(n,m,:)).';
             if n==m
             plot(f{j},real(x_plot),'Color',ColorSet(j,:),'LineStyle',LineStyleSet{j},'LineWidth',LineWidthSet(j));
             else
@@ -306,58 +306,60 @@ if strcmpi(letter,'yes')
     tight_subplot_letter(ha,lettersize,letterpos);
 end
 
+
 if strcmpi(button,'on') | strcmpi(button,'yes')
 % Create push button
 btnBig = uicontrol('Style', 'pushbutton', 'String', 'Big',...
         'Position', [20 20 50 20],...
-        'Callback', {@sizefigFig }); 
+        'Callback', {@makeBigFig }); 
     
 % Create push button
 btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
         'Position', [20 0 50 20],...
-        'Callback', {@makeLogAxes ha}); 
+        'Callback', {@makeLogAxes ha{k}}); 
 end
 
 
-end
+% function sizefigFig(source,event)
 
-function sizefigFig(source,event)
+% [f_new hax_new]=copyfigcontent(gca);
+% sizefig('m');
 
-[f_new hax_new]=copyFigContent(gca);
-sizefig('m');
+% ha_new=plotsub(gca,[0.1 0.1],[0.1 0.1],[0.1 0.1]);
+% sizefig('m');
 
-btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
-        'Position', [20 10 50 20],...
-        'Callback', {@makeLogAxes hax_new}); 
+% btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
+        % 'Position', [20 10 50 20],...
+        % 'Callback', {@makeLogAxes ha_new}); 
     
 
-end
+% end
 
-function makeLogAxes(source,even,ha)
+% function makeLogAxes(source,even,ha)
 
-if sqrt(length(ha))==round(sqrt(length(ha))); diagonalOnly=true; else; diagonalOnly=false; end
+% if sqrt(length(ha))==round(sqrt(length(ha))); diagonalOnly=true; else; diagonalOnly=false; end
 
-diagonalOnly=false;
+% diagonalOnly=false;
 
-indexAxes=[1:length(ha)];
-if diagonalOnly
-indexAxes=diag(reshape(indexAxes,sqrt(length(ha)),sqrt(length(ha)))); 
-else
-end
+% indexAxes=[1:length(ha)];
+% if diagonalOnly
+% indexAxes=diag(reshape(indexAxes,sqrt(length(ha)),sqrt(length(ha)))); 
+% else
+% end
 
-isLog=strcmpi(get(ha(1),'YScale'),'log');
+% isLog=strcmpi(get(ha(1),'YScale'),'log');
 
-for k=1:length(indexAxes);
+% for k=1:length(indexAxes);
     
-    if isLog
-    set(ha(indexAxes(k)),'YScale','linear');
-    else
-    set(ha(indexAxes(k)),'YScale','log');        
-    end
+    % if isLog
+    % set(ha(indexAxes(k)),'YScale','linear');
+    % else
+    % set(ha(indexAxes(k)),'YScale','log');        
+    % end
     
-end
+% end
 
-end
+% end
 
 
 %%

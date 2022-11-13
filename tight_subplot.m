@@ -1,11 +1,11 @@
 function ha=tight_subplot(nh,nw,gap,marg_h,marg_w,weight_h,weight_w,gapsep)
 
 %% tight_subplot creates "subplot" axes with adjustable gaps and margins
-
+%
 % Example: 
 % ha = tight_subplot(3,2,[.01 .03],[.1 .01],[.01 .01])
 % for ii = 1:6; axes(ha(ii)); plot(randn(10,ii)); end
-
+%
 % Inputs:
 % nh: number of axes in hight (vertical direction)
 % nw: number of axes in width (horizontal direction)
@@ -14,15 +14,14 @@ function ha=tight_subplot(nh,nw,gap,marg_h,marg_w,weight_h,weight_w,gapsep)
 % marg_w: margins in width in normalized units (0...1), [left right] for different left and right margins 
 % weight_h: relative height of axes
 % weight_w: relative width of axes
-% gapsep: gapsep
-%
+% gapsep: 
 %
 % Outputs:
 % ha: array of handles of the axes objects, starting from upper left corner, going row-wise like reading a book
 %
 % Based on the script by Pekka Kumpulainen, Tampere University of Technology 
 % Modified by OWP
-
+%
 %% Input check
 
 if nh>20 | nw>20
@@ -53,6 +52,10 @@ end
 
 if numel(weight_w)~=nw
     error('Weight w not correct size');
+end
+
+if isempty(gap)
+    gap=0.1;
 end
 
 if numel(gap)==1

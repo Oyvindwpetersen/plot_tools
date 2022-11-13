@@ -169,7 +169,7 @@ for i=1:n1
         
         for k=1:nData
         H_plot=squeeze(H_k{k}(i,j,:));
-        if isreal(H_plot);     
+        if isreal(H_plot)     
         plot(w_k{k},H_plot,'Color',ColorSet(k,:),'LineStyle',LineStyleSet{k},'LineWidth',LineWidthSet(k),'Marker',MarkerSet{k});
         else
         plot(w_k{k},real(H_plot),'Color',ColorSet(k,:),'LineStyle',LineStyleSet{k},'LineWidth',LineWidthSet(k),'Marker',MarkerSet{k});
@@ -204,49 +204,51 @@ if strcmpi(letter,'yes');
 end
 
 
+
 if strcmpi(button,'on') | strcmpi(button,'yes')
 % Create push button
 btnBig = uicontrol('Style', 'pushbutton', 'String', 'Big',...
         'Position', [20 20 50 20],...
-        'Callback', {@sizefigFig }); 
+        'Callback', {@makeBigFig }); 
     
 % Create push button
 btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
         'Position', [20 0 50 20],...
-        'Callback', {@makeLogAxes ha}); 
+        'Callback', {@makeLogAxes ha{k}}); 
 end
+
 
 
 end
 %%
-function sizefigFig(source,event);
+% function sizefigFig(source,event);
 
-[f_new hax_new]=copyFigContent(gca);
-sizefig('m');
+% [f_new hax_new]=copyFigContent(gca);
+% sizefig('m');
 
-btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
-        'Position', [20 10 50 20],...
-        'Callback', {@makeLogAxes hax_new}); 
+% btnLog = uicontrol('Style', 'pushbutton', 'String', 'Log',...
+        % 'Position', [20 10 50 20],...
+        % 'Callback', {@makeLogAxes hax_new}); 
     
 
-end	
+% end	
 
-%%
+%
 
-function makeLogAxes(source,even,ha);
+% function makeLogAxes(source,even,ha);
 
-indexAxes=[1:length(ha)];
+% indexAxes=[1:length(ha)];
 
-isLog=strcmpi(get(ha(1),'YScale'),'log');
+% isLog=strcmpi(get(ha(1),'YScale'),'log');
 
-for k=1:length(indexAxes);
+% for k=1:length(indexAxes);
     
-    if isLog
-    set(ha(indexAxes(k)),'YScale','linear');
-    else
-    set(ha(indexAxes(k)),'YScale','log');        
-    end
+    % if isLog
+    % set(ha(indexAxes(k)),'YScale','linear');
+    % else
+    % set(ha(indexAxes(k)),'YScale','log');        
+    % end
     
-end
+% end
 
-end	
+% end	

@@ -1,6 +1,5 @@
 function [ha,hp]=plot_tile(x,y,nSignals,nSources,nw,nh,plotopt_all,axesopt,figopt)
 
-
 %%
 
 range=rangebin(nSignals,nh*nw); %number of subplots per figure;

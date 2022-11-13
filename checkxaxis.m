@@ -1,4 +1,4 @@
-function isXaxis=checkxaxis(a)
+function isxaxis=checkxaxis(a)
 
 %% Check if argument in is a time axis
 %
@@ -6,14 +6,24 @@ function isXaxis=checkxaxis(a)
 % a: vector with x-axis, e.g. time vector
 %
 % Outputs:
-% isXaxis: true/false
+% isxaxis: true/false
 %
 %%
 
-isXaxis=true;
+isxaxis=true;
 
 if ~isnumeric(a)
-	isXaxis=false;
+	isxaxis=false;
+    return
+end
+
+if sum(size(a)>1)>1
+	isxaxis=false;
+    return
+end
+
+if size(a,3)>1
+	isxaxis=false;
     return
 end
 
@@ -21,32 +31,31 @@ if ~isa(a,'double')
     a=double(a);
 end
 
-if sum(size(a)>1)>1
-	isXaxis=false;
-    return
-end
-
-if any(diff(a)<=0)
-    isXaxis=false;
-    return
-end
+% if any(diff(a)<=0)
+%     isxaxis=false;
+%     return
+% end
 
 if sum(isnan(a))>1
-	isXaxis=false;
+	isxaxis=false;
     return
 end
 
 if any(any(any(imag(a))))
-	isXaxis=false;
+	isxaxis=false;
     return
 end
 
-if ~isnumeric(a)
-	isXaxis=false;
-    return
-end
 
-    
+n=length(a);
+
+n_div=min(100,n);
+ind_check=ceil(linspace(1,n,n_div));
+
+if any(diff(a(ind_check))<0)
+	isxaxis=false;
+    return
+end    
 % n_window=min(100,length(a));
 % n_check=10;
 % 

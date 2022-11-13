@@ -6,11 +6,11 @@ function copyaxescontent(hax_all,hax_new_all,closesource,override,varargin)
 % hax_all: handle to axes (original)
 % hax_new_all: handle to axes (new)
 % closesource: true/false, close original figures or not
-% override: ?
+% override: true/false, ignore error if length of hax_all does not match hax_new_all
 %
-% Outputs:
+% Outputs: none
 %
-%%
+%% Inputs
 
 p=inputParser;
 

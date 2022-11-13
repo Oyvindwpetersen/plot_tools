@@ -6,9 +6,9 @@ function legendadjust(pos,xy_adjust,ncol,ItemTokenSize)
 % pos: 'west' or 'mid' or 'east'
 % xy_adjust: [dx,dy] vector with adjustments relative to axes
 % ncol: number of legend columns
-% ItemTokenSize: length of legend bar (-)
+% ItemTokenSize: length of legend bar (-), e.g. [15 6];
 %
-% Outputs:
+% Outputs: none
 %
 %% Default inputs
 

@@ -6,36 +6,18 @@ function xlimall(varargin)
 % hfig: figure handleor figure number
 % xlimit: [lower, upper] limit
 %
-% Outputs:
+% Outputs: none
 %
 %%
 
 if nargin==1
     hfig=gcf;
-    xlimit=varargin{1};
+    var_limit=varargin{1};
 end
 
 if nargin==2
     hfig=varargin{1};
-    xlimit=varargin{2};
+    var_limit=varargin{2};
 end
 
-
-if isnumeric(hfig)
-    
-    for j=1:length(hfig)
-        ha=getsortedaxes(figure(hfig(j)));
-        for k=1:length(ha)
-            axesfast(ha(k));
-            xlim(xlimit);
-        end
-    end
-    
-else
-    ha=getsortedaxes(hfig);
-    for k=1:length(ha)
-        axesfast(ha(k));
-        xlim(xlimit);
-        
-    end
-end
+limall('x',var_limit,hfig);

@@ -4,7 +4,6 @@ function defaultplotopt(
 %%
 
 
-
 if isempty(LineWidth)
     LineWidth=0.5*ones(1,nSources);
 end

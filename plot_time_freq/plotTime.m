@@ -142,7 +142,7 @@ MarkerSet=repcell('none',1,30);
 end
 
 if isempty(figNoNew)
-[figNoNew,figNoTaken]=availablefigno(1,100);
+[figNoNew,figNoTaken]=availablefigno(1,100,3);
 else
 [figNoNew,figNoTaken]=availablefigno(figNoNew,100);
 end

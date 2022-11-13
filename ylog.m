@@ -5,7 +5,7 @@ function ylog(ha)
 % Inputs:
 % ha: axes handle or figure handle
 %
-% Outputs:
+% Outputs: none
 %
 %%
 

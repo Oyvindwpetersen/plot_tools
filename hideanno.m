@@ -3,10 +3,9 @@ function hideanno(h_handle)
 %% Hide annonation (legend) for selected objects
 %
 % Inputs:
-% h: axes handle or cell with axes h_handles
+% h_handle: axes handle or cell with axes handles
 %
-% Outputs:
-% 
+% Outputs: none
 %
 %% 
 

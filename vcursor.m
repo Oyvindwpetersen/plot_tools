@@ -5,7 +5,7 @@ function vcursor(fig_no)
 % Inputs:
 % fig_no: figure handle
 %
-% Outputs:
+% Outputs: none
 %
 %% 
 

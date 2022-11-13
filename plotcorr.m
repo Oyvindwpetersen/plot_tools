@@ -6,6 +6,7 @@ function varargout=plotcorr(M,varargin)
 % M: square matrix
 %
 % Outputs:
+% MCorr: normalized correlation matrix
 %
 %% Default inputs
 
@@ -31,6 +32,15 @@ end
 if nargout==1
     varargout{1}=MCorr;
 end
+
+if any(MCorr>(1+1e-12))
+    warning('Correlation bigger than 1');
+end
+
+if any(-MCorr>(1+1e-12))
+    warning('Correlation smaller than 1');
+end
+
 
 imagesc(MCorr,[-1 1]);
 h = colorbar;

@@ -9,7 +9,7 @@ function rearrangeaxes(h_fig,n1,n2,gap,marg_h,marg_w)
 % marg_h: margins in height in normalized units (0...1), [lower upper] for different lower and upper margins 
 % marg_w: margins in width in normalized units (0...1), [left right] for different left and right margins 
 %
-% Outputs:
+% Outputs: none
 %
 %% 
 

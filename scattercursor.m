@@ -7,7 +7,7 @@ function scattercursor(hfig,sync,cell_string)
 % sync: true/false, sync movement between all axes
 % cell_string: cell with information strings (in same order as x-data in figures)
 %
-% Outputs:
+% Outputs: none
 %
 %% 
 

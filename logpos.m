@@ -7,7 +7,7 @@ function logpos(ha,var,range)
 % var: axis, 'x' or 'y' or 'z'
 % range: values, [lower upper]
 %
-% Outputs:
+% Outputs: none
 %
 %% Default inputs
 

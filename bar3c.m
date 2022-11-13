@@ -8,7 +8,7 @@ function hh = bar3c( varargin )
 % value of all bars on the graph.
 %
 
-[abscolor, idxabsc]=getarg('MaxColorVal',varargin{:});
+[abscolor, idxabsc]=getarg('MaxColorVal',varargin{:})
 if idxabsc
 varargin(idxabsc+(0:1))=[];
 end
