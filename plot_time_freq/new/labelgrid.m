@@ -46,7 +46,7 @@ if nargin<3
 end
 
 
-%% Genenrate labels
+%% Generate labels
 
 n=0;
 ylabel={};

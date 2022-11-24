@@ -1,4 +1,4 @@
-function plottime_new(varargin)
+function plottime(varargin)
 
 %% Input handling
 
