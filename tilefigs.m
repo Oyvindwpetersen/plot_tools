@@ -116,6 +116,10 @@ nrows=tile(1);
 ncols=tile(2);
 if numfigs > nrows*ncols
     disp ([' Requested tile size too small for ' num2str(numfigs) ' open figures '])
+    
+    tile(1)=tile(1)+1;
+    disp ([' Increasing rows']);
+    tilefigs(tile,left_or_right,figno,gap,border_h,border_w);
     return
 end
 

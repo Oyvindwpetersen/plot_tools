@@ -137,6 +137,17 @@ if isempty(y_labels)
 	y_labels=strseq('Y ',[1:nSignals]);
 end
 
+if length(y_labels)~=nSignals
+   if length(y_labels)==1
+      y_labels=repcell(y_labels{1},1,nSignals);
+   else
+      nSignals
+      y_labels
+      error('Length of ylabels incorrect');
+   end
+end
+
+
 %% Plot
 
 plotopt_all={};

@@ -41,24 +41,26 @@ if sync
 
         data_x_all(k,:)=childScatter.XData(1,:);
         data_y_all(k,:)=childScatter.YData(1,:);
+        data_z_all(k,:)=childScatter.ZData(1,:);
     end
 else
 	hax=[];
     data_x_all=[];
     data_y_all=[];
+    data_z_all=[];
 end
 
 dcm=datacursormode(gcf);
 set(dcm,'Interpreter','none');
 
 datacursormode on
-set(dcm,'updatefcn',{@infoCursor hax sync cell_string data_x_all data_y_all});
+set(dcm,'updatefcn',{@infoCursor hax sync cell_string data_x_all data_y_all data_z_all});
 
 
 end
 %%
 
-function [output_txt] = infoCursor(obj,event_obj,hax,sync,cell_string,data_x_all,data_y_all)
+function [output_txt] = infoCursor(obj,event_obj,hax,sync,cell_string,data_x_all,data_y_all,data_z_all)
 % Display the position of the data cursor
 % obj          Currently not used (empty)
 % event_obj    Handle to event object

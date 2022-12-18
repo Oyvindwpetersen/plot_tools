@@ -23,10 +23,10 @@ ha_dummy=tight_subplot(n1,n2,gap,marg_h,marg_w);
 for k=1:length(ha_dummy)
     pos{k}=get(ha_dummy(k),'Position');
 end
+close(h_fig_new);
 
 for k=1:length(ha0)
     set(ha0(k),'Position',pos{k});
 %     pos{k}=get(ha(k),'Position');
 end
 
-close(h_fig_new);

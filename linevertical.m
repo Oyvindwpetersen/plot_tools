@@ -97,7 +97,7 @@ for k=1:length(hax)
     end
     
     x_plot(1,:)=x;
-    h{k}=line(repmat(x_plot,2,1),repmat(yLim.',1,length(x)),'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'Parent',hax(k),'Tag','linevertical');
+    h{k}=line(repmat(x_plot,2,1),repmat(yLim.',1,length(x)),'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'Parent',hax(k),'Tag','linevertical','DisplayName',displayname);
     uistack(h{k},stack);
     
     % Turn off legend
