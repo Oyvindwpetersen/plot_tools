@@ -24,7 +24,7 @@ function ha=tight_subplot(nh,nw,gap,marg_h,marg_w,weight_h,weight_w,gapsep)
 %
 %% Input check
 
-if nh>20 | nw>20
+if nh>30 | nw>30
     error(['Too many subplots: ' 'nh=' num2str(nh) ', ' 'nw=' num2str(nw) ] );
 end
 
