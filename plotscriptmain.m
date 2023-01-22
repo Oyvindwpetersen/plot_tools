@@ -28,7 +28,7 @@ addParameter(p,'keepxtick','no',@ischar)
 addParameter(p,'keepytick','no',@ischar)
 addParameter(p,'keepctick','no',@ischar)
 addParameter(p,'uicontrol','no',@ischar)
-% addParameter(p,'InvertHardcopy','off',@ischar)
+addParameter(p,'BoxLineWidth',0.3,@isnumeric)
 
 parse(p,varargin{:});
 
@@ -41,42 +41,40 @@ labelsize=p.Results.labelsize;
 ticksize=p.Results.ticksize;
 legendsize=p.Results.legendsize;
 fpath=p.Results.path;
-format=p.Results.format; 
+format=p.Results.format;
 fname=p.Results.name;
 savefigure=p.Results.savefig;
 openfile=p.Results.open;
-res=p.Results.res; 
+res=p.Results.res;
 figure_box=p.Results.box;
-renderer=p.Results.renderer; 
+renderer=p.Results.renderer;
 yminorgrid=p.Results.yminorgrid;
 keepxtick=p.Results.keepxtick;
 keepytick=p.Results.keepytick;
 keepctick=p.Results.keepctick;
 uicont=p.Results.uicontrol;
-% InvertHardcopy=p.Results.InvertHardcopy;
+BoxLineWidth=p.Results.BoxLineWidth;
 
 %% Input handle.
-
-% set(gcf,'InvertHardcopy',InvertHardcopy)
 
 if isempty(hfig)
     hfig=gcf;
 end
 
 if isempty(fpath)
-fpath=cd;
+    fpath=cd;
 end
 
 if ~strcmp(fpath(end),'\')
-fpath=[fpath '\'];
+    fpath=[fpath '\'];
 end
 
 if exist(fpath)~=7
-   error(['Path does not exist: ' fpath]); 
+    error(['Path does not exist: ' fpath]);
 end
 
 if ~iscell(format)
-format={format};
+    format={format};
 end
 
 if ~strcmpi(renderer(1),'-')
@@ -86,38 +84,38 @@ end
 res_str=[ '-r' num2str(res)];
 
 for k=1:length(format)
-
-	if strcmp(format{k},'jpg')
-		formatShort{k}='jpg';
-		format{k}=['-d' 'jpeg'];
-	elseif strcmp(format{k},'eps') | strcmp(format{k},'epsc')
-		formatShort{k}='eps';
-		format{k}=['-depsc'];
-	else
-		formatShort{k}=format{k};
-		format{k}=['-d' format{k}];
-	end
-
+    
+    if strcmp(format{k},'jpg')
+        formatShort{k}='jpg';
+        format{k}=['-d' 'jpeg'];
+    elseif strcmp(format{k},'eps') | strcmp(format{k},'epsc')
+        formatShort{k}='eps';
+        format{k}=['-depsc'];
+    else
+        formatShort{k}=format{k};
+        format{k}=['-d' format{k}];
+    end
+    
 end
 
 %% Change properties
 
-hchildren=get(hfig,'Children'); 
+hchildren=get(hfig,'Children');
 uicontInd=[];
 
 for m=1:size(hchildren,1)
     
     htype=get(hchildren(m),'type');
-    if strcmpi(htype,'uicontextmenu') | strcmpi(htype,'polaraxes') | strcmpi(htype,'tiledlayout') | strcmpi(htype,'uimenu')  | strcmpi(htype,'uitoolbar') | strcmpi(htype,'annotationpane') 
+    if strcmpi(htype,'uicontextmenu') | strcmpi(htype,'polaraxes') | strcmpi(htype,'tiledlayout') | strcmpi(htype,'uimenu')  | strcmpi(htype,'uitoolbar') | strcmpi(htype,'annotationpane')
         continue;
-    elseif strcmpi(htype,'UIControl') & strcmpi(uicont,'no') 
+    elseif strcmpi(htype,'UIControl') & strcmpi(uicont,'no')
         set(hchildren(m),'Visible','off'); continue; uicontInd(end+1)=m;
     elseif strcmpi(htype,'colorbar')
         set(hchildren(m),'FontName',fontname)
         set(hchildren(m),'FontSize',ticksize)
         set(get(hchildren(m),'Label'),'FontSize',labelsize)
     elseif strcmpi(htype,'legend')
-	    set(hchildren(m),'FontSize',legendsize)
+        set(hchildren(m),'FontSize',legendsize)
         set(hchildren(m),'FontName',fontname)
     elseif strcmpi(htype,'axes')
         set(hchildren(m),'Fontsize',ticksize)
@@ -125,84 +123,73 @@ for m=1:size(hchildren,1)
         set(get(hchildren(m),'ylabel'),'FontSize',labelsize)
         set(get(hchildren(m),'zlabel'),'FontSize',labelsize)
         set(get(hchildren(m),'title'),'FontSize',titlesize)
-
+        
         set(hchildren(m),'FontName', fontname);
         set(get(hchildren(m),'ylabel'),'FontName',fontname)
         set(get(hchildren(m),'xlabel'),'FontName',fontname)
-        set(get(hchildren(m),'title'),'FontName',fontname) 
-
-        set(hchildren(m),'YMinorGrid', yminorgrid);    
+        set(get(hchildren(m),'title'),'FontName',fontname)
+        
+        set(hchildren(m),'YMinorGrid', yminorgrid);
     else
         warning(['Unknown type: ' htype]);
     end
     
     if strcmpi(figure_box,'on') & strcmpi(htype,'axes')
         set(hchildren(m,1),'box','on');
-        set(hchildren(m,1),'LineWidth',0.3);
+        set(hchildren(m,1),'LineWidth',BoxLineWidth);
     elseif strcmpi(figure_box,'off') & strcmpi(htype,'axes')
         set(hchildren(m,1),'box','off');
     end
-
-    %check is axes is a legendSmall type legend
-	if strcmpi(htype,'axes') 
-        check1=isempty(hchildren(m).XLabel.String); check2=isempty(hchildren(m).YLabel.String);
-        check3=isempty(hchildren(m).XTick); check4=isempty(hchildren(m).YTick);
-        if all([check1 check2 check3 check4])     
-            set(hchildren(m),'box','on');
-            set(hchildren(m),'LineWidth',0.3);
-            warning('If this line is activated, please check plotscriptmain.m, belongs to outdated functions.');
-        end
-    end
     
     if strcmpi(keepytick,'yes') & strcmpi(htype,'axes')
-       set(hchildren(m),'YTick',get(hchildren(m),'YTick'));
+        set(hchildren(m),'YTick',get(hchildren(m),'YTick'));
     end
-        
+    
     if strcmpi(keepxtick,'yes') & strcmpi(htype,'axes')
-       set(hchildren(m),'XTick',get(hchildren(m),'XTick'));
+        set(hchildren(m),'XTick',get(hchildren(m),'XTick'));
     end
     
     if strcmpi(keepctick,'yes') & strcmpi(htype,'colorbar')
-       set(hchildren(m),'Ticks',get(hchildren(m),'Ticks'));
+        set(hchildren(m),'Ticks',get(hchildren(m),'Ticks'));
     end
-        
+    
 end
 
 % Set position
-set(hfig, 'PaperPositionMode', 'manual');
-set(hfig, 'PaperUnits', 'centimeters');
-set(hfig, 'PaperPosition', [0 0 width height],'PaperSize',[width height]);
+set(hfig,'PaperPositionMode','manual');
+set(hfig,'PaperUnits','centimeters');
+set(hfig,'PaperPosition', [0 0 width height],'PaperSize',[width height]);
 
 % Save
 if strcmpi(savefigure,'yes')
-savefig(hfig,[fpath fname]);
+    savefig(hfig,[fpath fname]);
 end
 
 % Print
 for k=1:length(format)
-	print(hfig,renderer,format{k},res_str,[fpath fname])
-	disp(['printing ', fname ,' to ' fpath ' in ' formatShort{k}])
-
-	if strcmpi(openfile,'yes') & k==1
-		pause(0.1)
-
-		fullname=[fpath fname '.' formatShort{k}];
-			try
-				winopen(fullname);
-			catch
-				disp('Error: unable to open file')
-			end
-	end
-
+    print(hfig,renderer,format{k},res_str,[fpath fname])
+    disp(['printing ', fname ,' to ' fpath ' in ' formatShort{k}])
+    
+    if strcmpi(openfile,'yes') & k==1
+        pause(0.1)
+        
+        fullname=[fpath fname '.' formatShort{k}];
+        try
+            winopen(fullname);
+        catch
+            disp('Error: unable to open file')
+        end
+    end
+    
 end
 
 % Visible buttons
 for m=1:length(hchildren)
     
     if ~isvalid(hchildren(m)); continue; end
-		htype=get(hchildren(m),'type');
-		if strcmpi(htype,'UIControl') & strcmpi(uicont,'no') 
-			set(hchildren(m),'Visible','on');
-		end
-	end
+    htype=get(hchildren(m),'type');
+    if strcmpi(htype,'UIControl') & strcmpi(uicont,'no')
+        set(hchildren(m),'Visible','on');
+    end
+end
 end
