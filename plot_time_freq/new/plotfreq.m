@@ -20,7 +20,7 @@ parameter_struct=mergestruct(parameter_struct_default,parameter_struct_in);
 %% Plot
 
 for k=1:length(x)
-    dt=diff(x{1}(1:2));
+    dt=diff(x{k}(1:2));
     [x_freq{k},y_freq{k}]=fft_function(y{k},dt,2);
     
     % Delete negative part
@@ -33,6 +33,5 @@ for k=1:length(x)
 end
 
 [ha hp]=plot_main(x_freq,y_freq,parameter_struct);
-
 
 
