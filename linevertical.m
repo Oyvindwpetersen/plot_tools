@@ -96,8 +96,14 @@ for k=1:length(hax)
         set(leg,'AutoUpdate','off');
     end
     
-    x_plot(1,:)=x;
-    h{k}=line(repmat(x_plot,2,1),repmat(yLim.',1,length(x)),'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'Parent',hax(k),'Tag','linevertical','DisplayName',displayname);
+    x_plot=[];
+    y_plot=[];
+    for j=1:length(x)
+        x_plot=[x_plot; NaN; x(j) ; x(j)];
+        y_plot=[y_plot; NaN; yLim(1) ; yLim(2)];
+    end
+    
+    h{k}=plot(x_plot,y_plot,'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'DisplayName',displayname);
     uistack(h{k},stack);
     
     % Turn off legend

@@ -63,23 +63,23 @@ if isempty(hideleg)
     hideleg=true;
 end
 
-if length(x)>100
+if length(y)>100
     error('Too many lines')
 end
 
 %%
 
 if ischar(h_handle)
-   if strcmpi(h_handle,'all')
-   h_handle = findobj('Type', 'figure');
-   end
+    if strcmpi(h_handle,'all')
+        h_handle = findobj('Type', 'figure');
+    end
 end
 
 if strcmp(get(h_handle(1),'type'),'axes')
     hax=h_handle;
 elseif strcmp(get(h_handle(1),'type'),'figure')
     for k=1:length(h_handle)
-    hax_k{k}=getsortedaxes(h_handle(k));
+        hax_k{k}=getsortedaxes(h_handle(k));
     end
     hax=stackHorizontal(hax_k);
 end
@@ -87,37 +87,41 @@ end
 %%
 
 for k=1:length(hax)
-
-xLim=get(hax(k),'xlim');
-yLim=get(hax(k),'ylim');
-
-
-leg=get(hax(k),'legend');
-if ~isempty(leg)
-set(leg,'AutoUpdate','off');
-end
-
-y_plot(1,:)=y;
-h{k}=line(repmat(xLim.',1,length(y)),repmat(y_plot,2,1),'LineStyle',linestyle,'LineWidth',linewidth,'Color',color);
-uistack(h{k},stack);
-
-% Turn off legend
-if hideleg==true
-    h_anno=get(h{k},'Annotation');
-    if iscell(h_anno)
-
-        for j=1:length(h_anno)
-        set(get(h_anno{j},'LegendInformation'),'IconDisplayStyle','off');
-        end
-
-    else
-        set(get(h_anno,'LegendInformation'),'IconDisplayStyle','off');
+    
+    xLim=get(hax(k),'xlim');
+    yLim=get(hax(k),'ylim');
+    
+    leg=get(hax(k),'legend');
+    if ~isempty(leg)
+        set(leg,'AutoUpdate','off');
     end
+    
+    x_plot=[];
+    y_plot=[];
+    for j=1:length(y)
+        x_plot=[x_plot; NaN; xLim(1) ; xLim(2)];
+        y_plot=[y_plot; NaN; y(j) ; y(j)];
+    end
+    
+    h{k}=plot(x_plot,y_plot,'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'DisplayName',displayname);
+    uistack(h{k},stack);
+    
+    % Turn off legend
+    if hideleg==true
+        h_anno=get(h{k},'Annotation');
+        if iscell(h_anno)
+            
+            for j=1:length(h_anno)
+                set(get(h_anno{j},'LegendInformation'),'IconDisplayStyle','off');
+            end
+            
+        else
+            set(get(h_anno,'LegendInformation'),'IconDisplayStyle','off');
+        end
+    end
+    
 end
 
-end
-
-
-if length(hax)==1;
+if length(hax)==1
     h=h{1};
 end
