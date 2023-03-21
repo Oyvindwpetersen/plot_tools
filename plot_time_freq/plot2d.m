@@ -28,7 +28,7 @@ for k=1:nFig
         
         signalNo=range{k}(kk);
         
-        axesfast( ha{k}(kk) ); hold on; grid on;
+        axesfast(ha{k}(kk)); hold on; grid on;
         
         xlabel(axesopt.xlabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',axesopt.fontsize);
         ylabel(axesopt.ylabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',axesopt.fontsize);
@@ -58,25 +58,12 @@ for k=1:nFig
             if ~isempty(axesopt.xlimit); xlim(axesopt.xlimit); end
         end
         
-%         SPEED_UP=true;
-%         
-%         if SPEED_UP
-%             axChild   = get(gca,'Children');
-%             allCurves = findobj(axChild,'type','line');
-%             set(allCurves,'visible','off');
-%         end
-        
-%         if SPEED_UP
-%             %Restore visibility
-%             set(allCurves,'visible','on');
-%         end
-        
     end
     
     axesfast(ha{k}(1));
     
     if axesopt.legendshow
-        legend(ha{k}(1),'FontSize',8,'Location',axesopt.location,'Interpreter',axesopt.interpreter);
+        legend(ha{k}(1),'FontSize',axesopt.fontsize,'Location',axesopt.location,'Interpreter',axesopt.interpreter);
     end
     
     if strcmpi(figopt.button,'on') | strcmpi(figopt.button,'yes')
