@@ -67,10 +67,14 @@ gap_w=gap(2);
 maxpos=get(0,'screensize'); maxpos=maxpos(3:4);
 
 offset_w=0;
+offset_h=0;
 if strcmpi(left_or_right,'left') | strcmpi(left_or_right,'l')
-    maxpos(1)=maxpos(1)/2; offset_w=0;
+    maxpos(1)=maxpos(1)/2; offset_w=0; 
 elseif strcmpi(left_or_right,'right') | strcmpi(left_or_right,'r')
     maxpos(1)=maxpos(1)/2; offset_w=maxpos(1);
+elseif strcmpi(left_or_right,'lu')
+    maxpos(1)=maxpos(1)/2; offset_w=0;
+    maxpos(2)=maxpos(2)/2; offset_h= maxpos(2);
 end
 
 % maxpos(2)=maxpos(2) - 25;
@@ -133,7 +137,7 @@ length_w=(maxpos(1)-sum(border_w)-(ncols-1)*gap_w)/ncols;
 pnum=0;
 
 for iy=1:nrows
-    ypos=maxpos(2)-iy*length_h-border_h(2)-(iy-1)*gap_h;    
+    ypos=maxpos(2)-iy*length_h-border_h(2)-(iy-1)*gap_h+offset_h;    
     for ix=1:ncols
         xpos=offset_w+border_w(1)+(ix-1)*length_w+(ix-1)*gap_w;      
         pnum=pnum+1;
