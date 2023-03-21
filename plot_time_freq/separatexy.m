@@ -16,8 +16,26 @@ one_x_axis=false;
 
 if length(data_cell)==1 % One input only, no x-axis provided
     one_x_axis=NaN;
-elseif any(length(data_cell)==[3:2:21]) % Odd input means that one x-axis is present
-    one_x_axis=true;
+elseif any(length(data_cell)==[3:2:21]) % Odd number of input means that one x-axis is present
+    one_x_axis=true
+    
+    if ~isvector(a)
+        size(data_cell{1}
+        error('x-axis must be a vector');
+    end
+
+    size_ref=size(data_cell{1});
+    for k=2:length(data_cell)
+    
+        size_check=size(data_cell{k});
+        if any(size_ref~=size_check)
+            k
+            size_ref
+            size_check
+            error('Size of y data not consistent');
+        end
+    end
+    
 else
     
     is_x_axis=[];
