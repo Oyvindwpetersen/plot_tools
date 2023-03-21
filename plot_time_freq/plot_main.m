@@ -29,9 +29,7 @@ addParameter(p,'cut',[],@isnumeric)
 
 addParameter(p,'log',false,@islogical)
 addParameter(p,'button','on',@ischar)
-addParameter(p,'type','all',@ischar)
 addParameter(p,'xlim',[],@isnumeric)
-% addParameter(p,'xzoom',[],@isnumeric)
 addParameter(p,'complexdata',false,@islogical)
 
 parse(p,varargin{1:end});
@@ -60,9 +58,7 @@ cut=p.Results.cut;
 
 log=p.Results.log;
 button=p.Results.button;
-type=p.Results.type;
 xlimit=p.Results.xlim;
-% xzoom=p.Results.xzoom;
 complexdata=p.Results.complexdata;
 
 %%
