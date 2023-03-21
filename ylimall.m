@@ -1,4 +1,4 @@
-function ylimall(hfig,ylimit)
+function ylimall(varargin)
 
 %% Set ylimit to multiple axes
 %
