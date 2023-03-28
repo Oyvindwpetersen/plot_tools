@@ -51,6 +51,11 @@ if strcmpi(parameter_struct.type,'auto')
     for k=1:length(y)
         y_out{k}=diag3d(y{k});
     end
+        
+    if isfield(parameter_struct,'comp')
+         [~,y_out,~]=compcut([],y_out,parameter_struct.comp,[]);
+         parameter_struct.comp=[];
+    end
     
     nSignals=size(y_out{1},1);
     nSources=length(y_out);
