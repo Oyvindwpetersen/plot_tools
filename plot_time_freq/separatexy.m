@@ -17,14 +17,14 @@ one_x_axis=false;
 if length(data_cell)==1 % One input only, no x-axis provided
     one_x_axis=NaN;
 elseif any(length(data_cell)==[3:2:21]) % Odd number of input means that one x-axis is present
-    one_x_axis=true
+    one_x_axis=true;
     
-    if ~isvector(a)
-        size(data_cell{1}
+    if ~isvector(data_cell{1})
+        size(data_cell{1})
         error('x-axis must be a vector');
     end
 
-    size_ref=size(data_cell{1});
+    size_ref=size(data_cell{2});
     for k=2:length(data_cell)
     
         size_check=size(data_cell{k});
@@ -47,9 +47,15 @@ else
         if checkxaxis(data_cell{k})==false; is_x_axis(k)=false; continue; end
             
     end
-    
+        
     if sum(is_x_axis)>1 % Multiple x-axis
-        one_x_axis=false;
+        
+        if all(is_x_axis(1:2:end)==1) & all(is_x_axis(2:2:end)==0) % Must be x1,y1,x2,y2,...
+            one_x_axis=false;
+        else
+            one_x_axis=true;
+        end
+        
     elseif sum(is_x_axis)==1 % One x-axis
         one_x_axis=true; 
 	elseif sum(is_x_axis)==0 % No x-axis
@@ -57,7 +63,13 @@ else
         one_x_axis=NaN;
     end
     
+    
+    
+    
+    
 end
+
+%% Create cell with x and y
 
 if one_x_axis==true
     
