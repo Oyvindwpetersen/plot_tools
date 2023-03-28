@@ -23,8 +23,6 @@ parameter_struct=mergestruct(parameter_struct_default,parameter_struct_in);
 
 [y,parameter_struct]=data_3d_to_2d(y,parameter_struct);
 
-% [y,parameter_struct]=data_reim_split(y,parameter_struct);
-
 %% Plot
 
 [ha hp]=plot_main(x,y,parameter_struct);
