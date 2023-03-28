@@ -26,6 +26,7 @@ addParameter(p,'marg_w',[.05 .025],@isnumeric)
 
 addParameter(p,'comp',[],@isnumeric)
 addParameter(p,'cut',[],@isnumeric)
+addParameter(p,'type','',@ischar)
 
 addParameter(p,'log',false,@islogical)
 addParameter(p,'button','on',@ischar)
@@ -55,6 +56,7 @@ marg_w=p.Results.marg_w;
 
 comp=p.Results.comp;
 cut=p.Results.cut;
+% type=p.Results.type; % Not used, 'all' or 'auto' handled outside in 3d to 2d function
 
 log=p.Results.log;
 button=p.Results.button;
