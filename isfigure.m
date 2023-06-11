@@ -1,18 +1,7 @@
-function logic=isfigure(h_handle)
-
-%% Check if figure
-%
-% Inputs:
-% h_handle: query handle
-%
-% Outputs:
-% logic: true/false 
-%
-%% 
-
+function logic = isfigure(h_handle)
 try
-    logic=strcmp(get(h_handle, 'type'), 'figure');
+    logic = strcmp(get(h_handle, 'type'), 'figure');
 catch
-    logic=false;
+    logic = false;
 end
 end
