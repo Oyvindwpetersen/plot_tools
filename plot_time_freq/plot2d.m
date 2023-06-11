@@ -12,6 +12,11 @@ nFig=length(range);
 
 [figno_new,figno_taken]=availablefigno(1,100,nFig);
 
+nFig_max=30;
+if length(figno_taken)>nFig_max
+    error(['Too many open figures, exceeding limit: ' num2str(nFig_max)]);
+end
+
 if nFig>20
     error(['Number of figures exceeding limit: ' num2str(nFig)])
 end
