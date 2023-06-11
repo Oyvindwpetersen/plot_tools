@@ -22,6 +22,10 @@ else
 	hax0=h;
 end
 
+if isempty(hax0)
+    hax_new=[];
+end
+
 for k=1:length(hax0)
 
 	if strcmpi(get(hax0(k),'Visible'),'on')
