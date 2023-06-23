@@ -1,8 +1,11 @@
 
-
 # Other
 develop/
 __old__/
-
+expired/
+doc_private/
+old_legacy/
+*expired*/
+*.asv*/
 # TOML file
 *.toml
