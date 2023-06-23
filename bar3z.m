@@ -1,6 +1,5 @@
 function  bar3z(A,varargin )
-
-%% Find available figure number to avoid collision
+%% 3D bar chart
 %
 % Inputs:
 % A: matrix to plot as bars
