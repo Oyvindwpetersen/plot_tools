@@ -14,7 +14,7 @@ function ha=tight_subplot(nh,nw,gap,marg_h,marg_w,weight_h,weight_w,gapsep)
 % marg_w: margins in width in normalized units (0...1), [left right] for different left and right margins 
 % weight_h: relative height of axes
 % weight_w: relative width of axes
-% gapsep: 
+% gapsep: extra gap, specified as [subplot_no,dimension,separation]
 %
 % Outputs:
 % ha: array of handles of the axes objects, starting from upper left corner, going row-wise like reading a book
