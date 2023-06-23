@@ -113,7 +113,7 @@ if ischar(x_labels)
     x_labels={x_labels};
 end
 
-if length(x_labels)~=nSignals
+if length(x_labels)<nSignals
    if length(x_labels)==1
       x_labels=repcell(x_labels{1},1,nSignals);
    else
@@ -135,7 +135,7 @@ if isempty(y_labels)
 	y_labels=strseq('Y ',[1:nSignals]);
 end
 
-if length(y_labels)~=nSignals
+if length(y_labels)<nSignals
    if length(y_labels)==1
       y_labels=repcell(y_labels{1},1,nSignals);
    else
