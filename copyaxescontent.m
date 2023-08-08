@@ -29,11 +29,19 @@ if ~iscell(skipvar)
 end
 
 if iscell(hax_all)
-    hax_all=stackVertical(hax_all);
+    cell_temp=hax_all;
+    hax_all=[];
+    for k=1:length(cell_temp);
+        hax_all=[hax_all;cell_temp{k}];
+    end
 end
 
 if iscell(hax_new_all)
-    hax_new_all=stackVertical(hax_new_all);
+    cell_temp=hax_new_all;
+    hax_new_all=[];
+    for k=1:length(cell_temp);
+        hax_new_all=[hax_new_all;cell_temp{k}];
+    end
 end
 
 if nargin==2
