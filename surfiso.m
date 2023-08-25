@@ -21,6 +21,7 @@ addParameter(p,'facealpha',0.8,@isnumeric)
 addParameter(p,'displayname','',@ischar)
 addParameter(p,'isolines',[20],@isnumeric) % Number of isolines between [f_min,f_max]
 addParameter(p,'view',[40 15],@isnumeric)
+addParameter(p,'cbar',[0.5 1 0 0],@isnumeric)
 
 parse(p,varargin{1:end});
 
@@ -31,6 +32,7 @@ facealpha=p.Results.facealpha;
 displayname=p.Results.displayname;
 isolines=p.Results.isolines;
 viewvec=p.Results.view;
+cbar=p.Results.cbar;
 
 %%
 
@@ -55,7 +57,13 @@ surfcell={tri,[x(:,1),x(:,2),f]};
 
 colormap(brewermap(100,'GnBu'));
 hc=colorbar('Location','north');
-colorbarpos(hc,0.5,1.0,0,0.2);
+
+scale_x=cbar(1);
+scale_y=cbar(2);
+dx=cbar(3);
+dy=cbar(4);
+
+colorbarpos(hc,scale_x,scale_y,dx,dy);
 
 view(viewvec);
 
