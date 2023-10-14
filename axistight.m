@@ -41,6 +41,11 @@ if nargin < 1, H = gca; end
 if nargin < 2, P = 0.05; end
 if nargin < 3, varargin = {'y'}; end
 
+
+if ~isnumeric(P);
+    error('P must be numeric, e.g. [0 0.05]');
+end
+
 if isempty(varargin), varargin = {'y'}; end
 
 % if H is a figure, run for all axes in figure
@@ -177,7 +182,12 @@ end
         lim = get(H,limname);
         lim_range = lim(2)-lim(1);
         lim = [0 (lim(2)+Pax*lim_range)];
-        set(H,limname,lim);
+
+        if lim(1)<lim(2)
+            set(H,limname,lim);
+        else
+            warning('axistight y0 probably has negative number, ignoring');
+        end
     end
 
     function set_tight_ylog(limname,Pax)
