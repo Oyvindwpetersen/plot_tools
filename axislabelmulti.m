@@ -45,6 +45,10 @@ if ischar(axislabel_number)
         axislabel_number=length(hax)+[-2 -1 0];
     elseif strcmpi(axislabel_number,'bottom4')
         axislabel_number=length(hax)+[-3 -2 -1 0];
+    elseif strcmpi(axislabel_number,'bottom5')
+        axislabel_number=length(hax)+[-4 -3 -2 -1 0];
+    elseif strcmpi(axislabel_number,'bottom6')
+        axislabel_number=length(hax)+[-5 -4 -3 -2 -1 0];
     end
 end
 
