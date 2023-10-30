@@ -8,7 +8,7 @@ p=inputParser;
 addParameter(p,'Displayname',{})
 addParameter(p,'legendshow',true)
 addParameter(p,'location','NorthEast')
-addParameter(p,'Color',[],@isnumeric)
+addParameter(p,'Color',[])
 addParameter(p,'alpha',[],@isnumeric)
 addParameter(p,'Marker',{},@iscell)
 addParameter(p,'LineStyle',{},@iscell)
@@ -152,7 +152,12 @@ plotopt_all={};
 for j=1:nSources
     
     plotopt=struct();
-    plotopt.Color=Color(j,:);
+
+    if iscell(Color)
+        plotopt.Color=Color{j};
+    else
+        plotopt.Color=Color(j,:);
+    end
     plotopt.LineStyle=LineStyle{j};
     plotopt.LineWidth=LineWidth(j);
     plotopt.Displayname=Displayname{j};
