@@ -1,4 +1,4 @@
-function varargout=plottf(varargin)
+function varargout=plotcf(varargin)
 
 %% Input handling
 
