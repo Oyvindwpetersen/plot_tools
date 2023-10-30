@@ -1,4 +1,4 @@
-function plotopt=optlib(a,b)
+function plotopt=figtight(a,b)
 
 
 %%
