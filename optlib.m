@@ -9,7 +9,7 @@ if a==3 & b==8
     plotopt.xlabel='$t$';
     plotopt.ylabel='$x(t)$';
     plotopt.marg_h=[0.25 0.10];
-    plotopt.marg_w=[0.15 0.05];
+    plotopt.marg_w=[0.125 0.05];
     plotopt.gap=[0.15 0.15];
     plotopt.interpreter='latex';
     % % plotopt.xlim=[0 10];
