@@ -10,7 +10,7 @@ function ha=plottimezoom(t_zoom,gap,marg_h,marg_w,weight_w,legend_logic,varargin
 % legend_logic: [logic_left,logic_left] to control labels
 %
 % Outputs:
-% ha: filter state estimate
+% ha: axes handles
 
 %%
 
