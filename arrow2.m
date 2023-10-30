@@ -1,13 +1,17 @@
 function arrow2(coord_start,coord_end,varargin)
 
-%% 2 dim arrow
-
-% coord_start=[x1 y1]
-% coord_end=[x2 y2]
-
+%% 2 dimensional arrow
+%
+% Inputs:
+% coord_start: [x1 y1]
+% coord_end: [x2 y2]
+%
+% Outputs:
+% 
+% 
 % HeadStyles: https://se.mathworks.com/help/matlab/ref/matlab.graphics.shape.arrow-properties.html
 % 'vback2' (default) | 'plain' | 'ellipse' | 'vback1' | 'vback3' | 'cback1' | 'cback2' | ...
-
+%
 
 %% Define parameters
 
