@@ -37,7 +37,11 @@ cbar=p.Results.cbar;
 %%
 
 if size(x,2)~=2
-    error('x must be 2 columns');
+    error('x must be 2 columns')
+end
+
+if any(any(imag(f)))
+    error('f must be real')
 end
 
 f=f(:);
