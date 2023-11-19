@@ -53,7 +53,7 @@ if ~isempty(decimation)
 end
     
 x1=[x_pred flip(x_pred)];
-y1=[f_pred-SD_f_pred flip(f_pred+SD_f_pred)];
+y1=[f_pred-SD_f_pred*n_scale flip(f_pred+SD_f_pred*n_scale)];
 
 h_shade=patch(x1,y1,Color,'FaceAlpha',Alpha,'LineStyle',LineStyle,'DisplayName',DisplayName);
 
