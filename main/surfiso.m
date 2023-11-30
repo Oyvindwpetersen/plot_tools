@@ -3,7 +3,7 @@ function [h_surf,h_iso]=surfiso(x,f,varargin)
 %% 2D surface with isolines
 %
 % Inputs:
-% x: [N,2] matrix with x1 and x2 values as columns
+% x: [N,2] matrix with x1 and x2 values as columns (must be a rectangular grid)
 % f: [N,1] vector with surface values
 %
 % Outputs:
@@ -23,7 +23,7 @@ addParameter(p,'isolines',[20],@isnumeric) % Number of isolines between [f_min,f
 addParameter(p,'linestyle','-',@ischar)
 addParameter(p,'linewidth',0.3,@isnumeric) 
 addParameter(p,'view',[40 15],@isnumeric)
-addParameter(p,'cbar',[0.5 1 0 0],@isnumeric)
+addParameter(p,'cbar',[0.5 1 0 0],@isnumeric) % Set to NaN to turn off colorbar
 addParameter(p,'xtick',[],@isnumeric)
 addParameter(p,'ytick',[],@isnumeric)
 
