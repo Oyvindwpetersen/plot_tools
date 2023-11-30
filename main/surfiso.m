@@ -20,8 +20,12 @@ addParameter(p,'zlabel','z',@ischar)
 addParameter(p,'facealpha',0.8,@isnumeric)
 addParameter(p,'displayname','',@ischar)
 addParameter(p,'isolines',[20],@isnumeric) % Number of isolines between [f_min,f_max]
+addParameter(p,'linestyle','-',@ischar)
+addParameter(p,'linewidth',0.3,@isnumeric) 
 addParameter(p,'view',[40 15],@isnumeric)
 addParameter(p,'cbar',[0.5 1 0 0],@isnumeric)
+addParameter(p,'xtick',[],@isnumeric)
+addParameter(p,'ytick',[],@isnumeric)
 
 parse(p,varargin{1:end});
 
@@ -31,8 +35,12 @@ zlab=p.Results.zlabel;
 facealpha=p.Results.facealpha;
 displayname=p.Results.displayname;
 isolines=p.Results.isolines;
+linestyle=p.Results.linestyle;
+linewidth=p.Results.linewidth;
 viewvec=p.Results.view;
 cbar=p.Results.cbar;
+xtick=p.Results.xtick;
+ytick=p.Results.ytick;
 
 %%
 
@@ -57,20 +65,39 @@ shading interp
 
 % Isoline
 surfcell={tri,[x(:,1),x(:,2),f]};
-[h_iso,V]=IsoLine(surfcell,f,isolines,[0.5 0.5 0.5]);
+[h_iso,V]=IsoLine(surfcell,f,isolines,[0.5 0.5 0.5],linestyle);
+
+for k=1:length(h_iso)
+    set(h_iso(k),'LineWidth',linewidth);
+end
 
 colormap(brewermap(100,'GnBu'));
-hc=colorbar('Location','north');
 
-scale_x=cbar(1);
-scale_y=cbar(2);
-dx=cbar(3);
-dy=cbar(4);
-
-colorbarpos(hc,scale_x,scale_y,dx,dy);
+if ~isnan(cbar)
+    hc=colorbar('Location','north');
+    
+    scale_x=cbar(1);
+    scale_y=cbar(2);
+    dx=cbar(3);
+    dy=cbar(4);
+    
+    colorbarpos(hc,scale_x,scale_y,dx,dy);
+end
 
 view(viewvec);
 
 xlabel(xlab);
 ylabel(ylab);
 zlabel(zlab);
+
+axistight(gca,[0 0 0],'x','y','z');
+
+if ~isempty(xtick)
+    set(gca,'XTick',xtick);
+end
+
+if ~isempty(ytick)
+    set(gca,'YTick',ytick);
+end
+
+
