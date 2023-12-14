@@ -1,24 +1,24 @@
-function h_shade=plotci(x_pred,f_pred,SD_f_pred,n_scale,varargin)
+function h_shade=plotci(x_pred,f_pred,sd_f_pred,n_scale,varargin)
 
 %% Plot confidence interval
 %
 % Inputs:
 % x_pred:  vector with input locations for prediction
 % SD_f_pred: vector with standard deviation for prediction
-% n_scale: scaling of standard deviation, usually 1
+% n_scale: scaling of standard deviation to be shown, usually 1,2, or 3
 % Color: color of shade
 %
 % Outputs:
 % h_shade: handle to plotted object
 %
-%
+
 %%
 
 p=inputParser;
 addParameter(p,'Color',[0.5 0.5 0.5],@isnumeric)
 addParameter(p,'Alpha',0.5,@isnumeric)
 addParameter(p,'LineStyle','none');
-addParameter(p,'DisplayName','Confidende interval',@ischar)
+addParameter(p,'DisplayName','Confidence interval',@ischar)
 addParameter(p,'hideanno',true)
 addParameter(p,'decimation',[])
 
@@ -33,31 +33,24 @@ decimation=p.Results.decimation;
 
 %%
 
-if min(size(x_pred))==1 & min(size(f_pred))==1 & min(size(SD_f_pred))==1
+if min(size(x_pred))==1 & min(size(f_pred))==1 & min(size(sd_f_pred))==1
     
     if size(x_pred,1)>size(x_pred,2); x_pred=x_pred.'; end
     if size(f_pred,1)>size(f_pred,2); f_pred=f_pred.'; end
-    if size(SD_f_pred,1)>size(SD_f_pred,2); SD_f_pred=SD_f_pred.'; end
+    if size(sd_f_pred,1)>size(sd_f_pred,2); sd_f_pred=sd_f_pred.'; end
 
 end
-
-% figure(); sizefig;
-% hold on; grid on;
-% plot(x,y);
-% sd_y=0.1*ones(size(y));
 
 if ~isempty(decimation)
     x_pred=x_pred(:,1:decimation:end);
     f_pred=f_pred(:,1:decimation:end);
-    SD_f_pred=SD_f_pred(:,1:decimation:end);
+    sd_f_pred=sd_f_pred(:,1:decimation:end);
 end
     
 x1=[x_pred flip(x_pred)];
-y1=[f_pred-SD_f_pred*n_scale flip(f_pred+SD_f_pred*n_scale)];
+y1=[f_pred-sd_f_pred*n_scale flip(f_pred+sd_f_pred*n_scale)];
 
 h_shade=patch(x1,y1,Color,'FaceAlpha',Alpha,'LineStyle',LineStyle,'DisplayName',DisplayName);
-
-% toc
 
 uistack(h_shade,'bottom');
 
