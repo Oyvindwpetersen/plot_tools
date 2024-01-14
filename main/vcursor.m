@@ -9,7 +9,7 @@ function vcursor(fig_no)
 %
 %% 
 
-h_figs_all = getAllFigures();
+h_figs_all=findall(0,'Type','figure');
 
 if nargin==0 | isempty(fig_no)
     h_figs=h_figs_all;
