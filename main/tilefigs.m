@@ -144,13 +144,13 @@ for iy=1:nrows
         if (pnum>numfigs)
             break
         else
-            figure(hfigall(pnum));
-%             set(0,'CurrentFigure',hfigall(pnum));
+            % set(0,'CurrentFigure',hfigall(pnum));
             set(hfigall(pnum),'WindowState','maximized');
             set(hfigall(pnum),'WindowState','normal');
 
             set(hfigall(pnum),'Units','pixels');
             set(hfigall(pnum),'Position',[ xpos ypos length_w length_h ]);
+            figure(hfigall(pnum));
         end
     end
 end
