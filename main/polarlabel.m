@@ -1,4 +1,4 @@
-function polarLabel(rAxis,rMax,phiAxis,zMax,varargin) 
+function polarlabel(rAxis,rMax,phiAxis,zMax,varargin) 
 
 p=inputParser;
 addParameter(p,'LineWidth',1,@isnumeric)
@@ -58,8 +58,8 @@ for k=1:length(phiAxis);
     plot3(x,y,z,'Color',colorGrid,'LineWidth',LineWidth);
     
 	[xt,yt,z]=pol2cart(phi,r.*[1.125],z);
-    ht1=text(xt(1),yt(1),z(1),[num2str(phi(1)*180/pi+180) '°'],'Color',colorLabelPhi,'LineWidth',1.5,'HorizontalAlignment','center','FontSize',FontSize);
-    ht2=text(xt(2),yt(2),z(2),[num2str(phi(2)*180/pi) '°'],'Color',colorLabelPhi,'LineWidth',1.5,'HorizontalAlignment','center','FontSize',FontSize);
+    ht1=text(xt(1),yt(1),z(1),[num2str(phi(1)*180/pi+180) 'Â°'],'Color',colorLabelPhi,'LineWidth',1.5,'HorizontalAlignment','center','FontSize',FontSize);
+    ht2=text(xt(2),yt(2),z(2),[num2str(phi(2)*180/pi) 'Â°'],'Color',colorLabelPhi,'LineWidth',1.5,'HorizontalAlignment','center','FontSize',FontSize);
 	uistack(ht1, 'top');
     uistack(ht2, 'top');
 
