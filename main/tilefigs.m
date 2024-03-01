@@ -22,6 +22,8 @@ function tilefigs(tile,left_or_right,figno,gap,border_h,border_w)
 %
 %% Input check
 
+drawnow();
+
 if nargin<1
     tile=[];
 end
@@ -44,6 +46,10 @@ end
 
 if nargin<6
     border_w=[100 100];
+end
+
+if length(tile)==1
+    tile=tile*[1 1];
 end
 
 if length(gap)==1
