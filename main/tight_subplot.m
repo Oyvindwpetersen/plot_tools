@@ -1,4 +1,4 @@
-function ha=tight_subplot(nh,nw,gap,marg_h,marg_w,weight_h,weight_w,gapsep)
+function [ha,pos]=tight_subplot(nh,nw,gap,marg_h,marg_w,weight_h,weight_w,gapsep,skipaxes)
 
 %% tight_subplot creates "subplot" axes with adjustable gaps and margins
 %
@@ -28,20 +28,32 @@ if nh>30 | nw>30
     error(['Too many subplots: ' 'nh=' num2str(nh) ', ' 'nw=' num2str(nw) ] );
 end
 
-if nargin<3; gap = .05; end
-if nargin<4 || isempty(marg_h); marg_h = .1; end
-if nargin<5; marg_w = .05; end
+if nargin<3;
+    gap=0.05;
+end
+
+if nargin<4 || isempty(marg_h);
+    marg_h=0.1;
+end
+
+if nargin<5 || isempty(marg_w);
+    marg_w=0.05;
+end
 
 if  nargin<6 | isempty(weight_h)
     weight_h=ones(1,nh)/nh;
 end
 
-if nargin<6 | isempty(weight_w)
+if nargin<7 | isempty(weight_w)
     weight_w=ones(1,nw)/nw;
 end
 
 if nargin<8 | isempty(gapsep)
     gapsep=[0 0 0];
+end
+
+if nargin<9 | isempty(skipaxes)
+    skipaxes=false;
 end
 
 %% Prepare
@@ -59,15 +71,15 @@ if isempty(gap)
 end
 
 if numel(gap)==1
-    gap = [gap gap];
+    gap=[gap gap];
 end
 
 if numel(marg_w)==1
-    marg_w = [marg_w marg_w];
+    marg_w=[marg_w marg_w];
 end
 
 if numel(marg_h)==1
-    marg_h = [marg_h marg_h];
+    marg_h=[marg_h marg_h];
 end
 
 %% Create axes
@@ -85,8 +97,8 @@ elseif gapdim==2; gap_w(gapno)=gap_w(gapno)+gapspace; gapspace_h=0; gapspace_w=g
 else  gapspace_h=0; gapspace_w=0;
 end
 
-axh = (1-gapspace_h-sum(marg_h)-(nh-1)*gap(1))/nh;  axh=axh.*nh.*weight_h;
-axw = (1-gapspace_w-sum(marg_w)-(nw-1)*gap(2))/nw; axw=axw.*nw.*weight_w;
+axh=(1-gapspace_h-sum(marg_h)-(nh-1)*gap(1))/nh;  axh=axh.*nh.*weight_h;
+axw=(1-gapspace_w-sum(marg_w)-(nw-1)*gap(2))/nw; axw=axw.*nw.*weight_w;
 
 if any(axh<0)
     axh
@@ -98,19 +110,21 @@ if any(axw<0)
     error('Width of subplot is negative');
 end
 
-ha = zeros(nh*nw,1);
-ii = 0;
+ha=zeros(nh*nw,1);
+ii=0;
 
-for ih = 1:nh
-       for iw = 1:nw
+for ih=1:nh
+    for iw=1:nw
         
-        px = marg_w(1)+sum(gap_w(1:(iw-1)))+sum(axw(1:(iw-1)));
-        py = 1-( marg_h(2)+sum(gap_h(1:(ih-1)))+sum(axh(1:(ih))) );
+        px=marg_w(1)+sum(gap_w(1:(iw-1)))+sum(axw(1:(iw-1)));
+        py=1-( marg_h(2)+sum(gap_h(1:(ih-1)))+sum(axh(1:(ih))) );
         
-        ii = ii+1;
-        ha(ii) = axes('Units','normalized','Position',[px py axw(iw) axh(ih)]);
+        ii=ii+1;
+        pos{ii}=[px py axw(iw) axh(ih)];
         
-        Pos{ii}=[px py axw(iw) axh(ih)];
-
-       end
+        if ~skipaxes
+            ha(ii)=axes('Units','normalized','Position',pos{ii});
+        end
+        
+    end
 end
