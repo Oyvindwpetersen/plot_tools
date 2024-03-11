@@ -118,7 +118,11 @@ if isempty(legendProp)
 %     continue
 elseif strcmpi(legendProp.Visible,'on') 
     
-    axes(hax_new);
+    % axes(hax_new);
+    gcf.CurrentAxes=hax_new;
+
+    % set(hax_new,get(hax_new,'legend')
+
 	legend('Show');
     legendPropNew=get(hax_new, 'Legend');
     
