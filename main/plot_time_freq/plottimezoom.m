@@ -1,4 +1,4 @@
-function ha=plottimezoom(t_zoom,gap,marg_h,marg_w,weight_w,legend_logic,varargin)
+function ha=plottimezoom(varargin)
 %% Plot time series with zoom window
 %
 % Inputs:
@@ -16,6 +16,55 @@ function ha=plottimezoom(t_zoom,gap,marg_h,marg_w,weight_w,legend_logic,varargin
 
 args_in=varargin;
 
+if isstruct(args_in{end})
+
+    args_in_end=args_in{end};
+
+    if isfield(args_in_end,'t_zoom')
+        t_zoom=args_in_end.t_zoom;
+        args_in_end=rmfield(args_in_end,'t_zoom');
+    else
+        t_zoom=[0 10];
+    end
+
+    if isfield(args_in_end,'weight')
+        weight_w=args_in_end.weight;
+        args_in_end=rmfield(args_in_end,'weight');
+    else
+        weight_w=[0.7 0.3];
+    end
+
+    if isfield(args_in_end,'gap')
+        gap=args_in_end.gap;
+    else
+        gap=[0.1 0.1];
+    end
+
+    if isfield(args_in_end,'marg_h')
+        marg_h=args_in_end.marg_h;
+    else
+        marg_h=[0.1 0.1];
+    end
+
+    if isfield(args_in_end,'marg_w')
+        marg_w=args_in_end.marg_w;
+    else
+        marg_w=[0.1 0.1];
+    end
+
+    if isfield(args_in_end,'legend_logic')
+        legend_logic=args_in_end.legend_logic;
+        args_in_end=rmfield(args_in_end,'legend_logic');
+    else
+        legend_logic=[1 0];
+    end
+
+    args_in{end}=args_in_end;
+
+end
+
+%%
+
 plottime(args_in{:});
 h_fig1=gcf;
 h_ax1=getsortedaxes(h_fig1);
@@ -28,13 +77,27 @@ end
 
 %%
 
-figure();
-ha=tight_subplot(length(h_ax1),2,gap,marg_h,marg_w,[],weight_w);
+% figure();
 
-copyaxescontent(h_ax1,ha(1:2:end),false,false);
-copyaxescontent(h_ax1,ha(2:2:end),true,false);
+[~,pos]=tight_subplot(length(h_ax1),2,gap,marg_h,marg_w,[],weight_w,[],true);
 
-% Turn of ylabel
+ha_ori=getsortedaxes(gcf);
+ha= gobjects(1,length(ha_ori)*2);
+ha(1:2:length(ha_ori)*2)=ha_ori;
+
+for k=1:2:length(pos)
+    set(ha(k),'Position',pos{k});
+end
+
+for k=2:2:length(pos)
+    ha(k) = axes('Units','normalized','Position',pos{k});
+end
+
+
+copyaxescontent(ha(1:2:end),ha(2:2:end),false,false);
+
+
+% Turn off ylabel
 for k=2:2:length(ha)
     YLabelProp=get(ha(k),'YLabel');
     set(YLabelProp,'Visible','off');
