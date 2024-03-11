@@ -8,6 +8,7 @@ function plottime(varargin)
 % Separate x and y data
 [x,y,nSignals,nSources]=separatexy(data_cell);
 
+
 %% Default parameters
 
 parameter_struct=struct();

@@ -37,7 +37,7 @@ end
 
 % If label for bottom row, 
 if ischar(axislabel_number)
-    if strcmpi(axislabel_number,'bottom')
+    if strcmpi(axislabel_number,'bottom') | strcmpi(axislabel_number,'bottom1')
         axislabel_number=length(hax);
     elseif strcmpi(axislabel_number,'bottom2')
         axislabel_number=length(hax)+[-1 0];
@@ -105,49 +105,3 @@ for j=1:length(hax)
         end
         
 end
-
-%%
-% hax=gethandle(h_handle);
-% 
-% if strcmpi(x_or_y,'x')
-%     
-%     for j=1:length(hax)
-%         
-%         if ~any(j==axislabel_number)
-%             set(get(hax(j),'XLabel'),'String','');
-%             if delete_ticks
-%                 currentXticks=get(hax(j),'XTick');
-%                 set(hax(j),'XTickLabel',repcell('',1,length(currentXticks)));
-%             end
-%         else
-%             set(get(hax(j),'XLabel'),'String',label_cell{j});
-%             
-%             if ~isempty(interpreter);
-%                 set(get(hax(j),'XLabel'),'Interpreter',interpreter);
-%             end
-%             
-%         end
-%         
-%     end
-%     
-% elseif strcmpi(x_or_y,'y')
-%     
-%     for j=1:length(hax)
-%         
-%         if ~any(j==axislabel_number)
-%             set(get(hax(j),'YLabel'),'String','');
-%             if delete_ticks
-%                 currentXticks=get(hax(j),'YTick');
-%                 set(hax(j),'YTickLabel',repcell('',1,length(currentXticks)));
-%             end
-%         else
-%             set(get(hax(j),'YLabel'),'String',label_cell{j});
-%             
-%             if ~isempty(interpreter);
-%                 set(get(hax(j),'YLabel'),'Interpreter',interpreter);
-%             end
-%         end
-%         
-%     end
-%     
-% end
