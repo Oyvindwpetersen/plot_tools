@@ -77,7 +77,7 @@ if isempty(LineWidth)
 end
 
 if isempty(Color)
-    Color=GenColor(nSources);
+    Color=gencol(nSources);
 end
 
 if ~isempty(alpha)
