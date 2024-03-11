@@ -81,15 +81,19 @@ elseif strcmp(get(h_handle(1),'type'),'figure')
     for k=1:length(h_handle)
         hax_k{k}=getsortedaxes(h_handle(k));
     end
-    hax=stackHorizontal(hax_k);
+
+    hax=cell2mat(hax_k);
+
 end
 
 %%
 
 for k=1:length(hax)
     
-    xLim=get(hax(k),'xlim');
-    yLim=get(hax(k),'ylim');
+    axes(hax(k));
+    
+    %xl=get(hax(k),'xlim');
+    yl=get(hax(k),'ylim');
     
     leg=get(hax(k),'legend');
     if ~isempty(leg)
@@ -100,7 +104,7 @@ for k=1:length(hax)
     y_plot=[];
     for j=1:length(x)
         x_plot=[x_plot; NaN; x(j) ; x(j)];
-        y_plot=[y_plot; NaN; yLim(1) ; yLim(2)];
+        y_plot=[y_plot; NaN; yl(1) ; yl(2)];
     end
     
     h{k}=plot(x_plot,y_plot,'LineStyle',linestyle,'LineWidth',linewidth,'Color',color,'DisplayName',displayname);
