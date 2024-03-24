@@ -102,7 +102,13 @@ if ~iscell(Marker)
 end
 
 if isempty(Displayname)
+
+    if nSources==1
+        legendshow=false;
+    end
+        
 	Displayname=strseq('',[1:nSources]);
+
 end
 
 if ~iscell(Displayname)
