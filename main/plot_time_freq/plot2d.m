@@ -34,7 +34,9 @@ for k=1:nFig
         signalNo=range{k}(kk);
         
         axesfast(ha{k}(kk)); hold on; grid on;
-        
+
+        set(ha{k}(kk),'YMinorGrid','off');
+
         xlabel(axesopt.xlabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',axesopt.fontsize);
         ylabel(axesopt.ylabel{signalNo},'interpreter',axesopt.interpreter,'FontSize',axesopt.fontsize);
         
