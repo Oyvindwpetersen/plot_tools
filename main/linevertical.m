@@ -67,6 +67,10 @@ if length(x)>100
     error('Too many lines')
 end
 
+if ismatrix(x) & isdiag(x)
+    x=diag(x);
+end
+
 %%
 
 if ischar(h_handle)
@@ -88,10 +92,18 @@ end
 
 %%
 
+% drawnow();
+
 for k=1:length(hax)
     
     axes(hax(k));
-    
+
+    ys=get(gca,'YScale');   
+
+    % if strcmpi(ys,'log')
+    %     axistight(gca,[0 0.05],'x','ylog2');
+    % end
+
     %xl=get(hax(k),'xlim');
     yl=get(hax(k),'ylim');
     
