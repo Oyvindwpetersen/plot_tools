@@ -35,10 +35,23 @@ else
     hax=gethandle(h_handle);
 end
 
-% If label for bottom row, 
+% If label for bottom row
 if ischar(axislabel_number)
-    if strcmpi(axislabel_number,'bottom') | strcmpi(axislabel_number,'bottom1')
+    if strcmpi(axislabel_number,'bottom') 
         axislabel_number=length(hax);
+
+        % Find centered position of all axes (vertical coordinate)
+        for k=1:length(hax)
+            pos_tmp=get(hax(k),'Position');
+            pos_all(k)=pos_tmp(2)+pos_tmp(4)/2;
+        end
+
+        % Find all within 0.05 of the minimum
+        pos_min=min(pos_all);
+        axislabel_number=find(abs(pos_all-pos_min)<0.05);
+
+    elseif strcmpi(axislabel_number,'bottom1')
+        axislabel_number=length(hax)+[0];
     elseif strcmpi(axislabel_number,'bottom2')
         axislabel_number=length(hax)+[-1 0];
     elseif strcmpi(axislabel_number,'bottom3')
