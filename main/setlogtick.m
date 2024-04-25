@@ -24,9 +24,9 @@ end
 %%
 
 for j=1:length(var)
-    
+
     for k=1:length(hax)
-        
+
         if strcmpi(var{j},'x')
             scalename='XScale'; limname='xlim'; tickname='XTick';
         elseif strcmpi(var{j},'y')
@@ -34,20 +34,35 @@ for j=1:length(var)
         elseif strcmpi(var{j},'z')
             scalename='ZScale'; limname='zlim'; tickname='ZTick';
         end
-        
+
         % If axis not log, continue
         if ~strcmpi(get(hax(k),scalename),'log'); continue; end
-        
+
         lim_log=log10(get(hax(k),limname));
         if lim_log(1)==-Inf; lim_log(1)==-10; end
-        
-        lim_log=[ceil(lim_log(1)) floor(lim_log(2))];
-        
+
+        lim_log_round=[ceil(lim_log(1)) floor(lim_log(2))];
+
         % Orders from lowest to highest
-        Nlog=[lim_log(1):lim_log(2)];
-        
+        Nlog=[lim_log_round(1):lim_log_round(2)];
+
         if ~isempty(ntick)
-            Nlog_plot=[Nlog(1):ceil(length(Nlog)/ntick):Nlog(end)];
+
+            if ntick>=length(Nlog)
+                Nlog_plot=Nlog;
+            elseif (ntick+1)==length(Nlog)
+
+                if abs(Nlog(1)-lim_log(1))>abs(Nlog(end)-lim_log(end))
+                    Nlog_plot=Nlog(2:end);
+                else
+                    Nlog_plot=Nlog(1:end-1);
+                end
+
+            else
+
+                Nlog_plot=[Nlog(1):ceil(length(Nlog)/ntick):Nlog(end)];
+
+            end
         else
             if length(Nlog)<=3
                 Nlog_plot=Nlog;
@@ -57,11 +72,11 @@ for j=1:length(var)
                 ntick=3;
                 Nlog_plot=[Nlog(1):ceil(length(Nlog)/ntick):Nlog(end)];
             end
-            
+
         end
-        
+
         % Set manual ticks
         set(hax(k),tickname,10.^Nlog_plot);
-        
+
     end
 end
