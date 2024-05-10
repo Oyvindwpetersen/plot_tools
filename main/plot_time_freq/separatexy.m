@@ -63,10 +63,6 @@ else
         one_x_axis=NaN;
     end
     
-    
-    
-    
-    
 end
 
 %% Create cell with x and y
