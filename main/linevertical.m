@@ -63,12 +63,14 @@ if isempty(hideleg)
     hideleg=true;
 end
 
-if length(x)>100
-    error('Too many lines')
+if ~iscell(x)
+    x_cell={x};
+else
+    x_cell=x;
 end
 
-if ismatrix(x) & isdiag(x)
-    x=diag(x);
+if length(x)>100
+    error('Too many lines')
 end
 
 %%
@@ -90,6 +92,16 @@ elseif strcmp(get(h_handle(1),'type'),'figure')
 
 end
 
+for n=1:length(x_cell)
+    if ismatrix(x_cell{n}) & isdiag(x_cell{n})
+        x_cell{n}=diag(x_cell{n});
+    end
+end
+
+if length(x_cell)==1 & length(hax)>1
+    x_cell=repcell(x_cell{1},1,length(hax));
+end
+
 %%
 
 % drawnow();
@@ -98,13 +110,8 @@ for k=1:length(hax)
     
     axes(hax(k));
 
-    ys=get(gca,'YScale');   
-
-    % if strcmpi(ys,'log')
-    %     axistight(gca,[0 0.05],'x','ylog2');
-    % end
-
-    %xl=get(hax(k),'xlim');
+    ys=get(gca,'YScale');
+    
     yl=get(hax(k),'ylim');
     
     leg=get(hax(k),'legend');
@@ -114,8 +121,8 @@ for k=1:length(hax)
     
     x_plot=[];
     y_plot=[];
-    for j=1:length(x)
-        x_plot=[x_plot; NaN; x(j) ; x(j)];
+    for j=1:length(x_cell{k})
+        x_plot=[x_plot; NaN; x_cell{k}(j) ; x_cell{k}(j)];
         y_plot=[y_plot; NaN; yl(1) ; yl(2)];
     end
     
