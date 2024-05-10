@@ -70,6 +70,8 @@ gap_w=gap(2);
 %% Find tile layout
 
 % Determine terminal size in pixels
+
+set(0,'units','pixels');
 maxpos=get(0,'screensize'); maxpos=maxpos(3:4);
 
 offset_w=0;
