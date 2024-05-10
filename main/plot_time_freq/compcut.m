@@ -28,8 +28,22 @@ if ~isempty(comp)
     for k=1:length(y)
         
         if size(y{k},3)>1
+
+            if size(y{k},1)<max(comp1)
+                error(['Cannot cut: maximum dimension ' num2str(size(y{k},1)) ' (asked for ' num2str(max(comp1)) ')']);
+            end
+
+            if size(y{k},2)<max(comp2)
+                error(['Cannot cut: maximum dimension ' num2str(size(y{k},2)) ' (asked for ' num2str(max(comp2)) ')']);
+            end
+
             y{k}=y{k}(comp1,comp2,:);
         else
+
+            if size(y{k},1)<max(comp1)
+                error(['Cannot cut: maximum dimension ' num2str(size(y{k},1)) ' (asked for ' num2str(max(comp1)) ')']);
+            end
+
             y{k}=y{k}(comp1,:);
         end
 
