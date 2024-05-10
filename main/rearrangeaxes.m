@@ -15,15 +15,7 @@ function rearrangeaxes(h_fig,n1,n2,gap,marg_h,marg_w)
 
 ha0=getsortedaxes(h_fig);
 
-% h_fig_new=figure('Visible','off');
-h_fig_new=figure();
-
-ha_dummy=tight_subplot(n1,n2,gap,marg_h,marg_w);
-
-for k=1:length(ha_dummy)
-    pos{k}=get(ha_dummy(k),'Position');
-end
-close(h_fig_new);
+[~,pos]=tight_subplot(n1,n2,gap,marg_h,marg_w,[],[],[],true);
 
 for k=1:length(ha0)
     set(ha0(k),'Position',pos{k});
