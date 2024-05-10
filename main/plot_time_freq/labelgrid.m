@@ -45,6 +45,12 @@ if nargin<3
     letter='H';
 end
 
+if isempty(letter)
+    underscore='';
+else
+    underscore='_';
+end
+
 %% Generate labels
 
 if isnumeric(n1) & isnumeric(n2)
@@ -55,7 +61,7 @@ if isnumeric(n1) & isnumeric(n2)
         n1{k1}=num2str(n1_tmp(k1));
     end
 
-    n2_tmp=[1:n2]
+    n2_tmp=[1:n2];
     n2={};
     for k2=1:length(n2_tmp)
         n2{k2}=num2str(n2_tmp(k2));
@@ -76,7 +82,7 @@ end
 ylabel={};
 for k1=1:length(n1)
         for k2=1:length(n2)
-            ylabel{k1,k2}=['$' prefix letter '_{' n1{k1}  n2{k2} '}' postfix '$'];
+            ylabel{k1,k2}=['$' prefix letter underscore '{' n1{k1}  n2{k2} '}' postfix '$'];
         end
     end
     ylabel=permute(ylabel,[2 1]); ylabel=ylabel(:);
