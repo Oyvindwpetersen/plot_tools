@@ -74,6 +74,8 @@ nSources=length(y);
 
 if isempty(LineWidth)
     LineWidth=0.5*ones(1,nSources);
+elseif length(LineWidth)==1
+    LineWidth=LineWidth*ones(1,nSources);
 end
 
 if isempty(Color)
