@@ -1,4 +1,4 @@
-function plotfreq(varargin)
+function ha=plotfreq(varargin)
 
 %% Input handling
 
