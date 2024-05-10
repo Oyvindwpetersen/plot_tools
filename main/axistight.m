@@ -35,24 +35,25 @@ function axistight(H, P, varargin)
 %
 %%
 
+args_in=varargin;
 
 % Default values
 if nargin < 1, H = gca; end
 if nargin < 2, P = 0.05; end
-if nargin < 3, varargin = {'y'}; end
+if nargin < 3, args_in = {'y'}; end
 
 
-if ~isnumeric(P);
+if ~isnumeric(P)
     error('P must be numeric, e.g. [0 0.05]');
 end
 
-if isempty(varargin), varargin = {'y'}; end
+if isempty(args_in), args_in = {'y'}; end
 
 % if H is a figure, run for all axes in figure
 if strcmpi(get(H,'Type'),'figure')
     hax=findall(H,'type','axes');
     for k=1:length(hax)
-        axistight(hax(k),P,varargin{:});
+        axistight(hax(k),P,args_in{:});
     end
     return
 end
@@ -60,16 +61,27 @@ end
 % if H is multiple handles, run for all
 if length(H)>1
     for k=1:length(H)
-        axistight(H(k),P,varargin{:});
+        axistight(H(k),P,args_in{:});
     end
     return
 end
 
-for ii = 1:length(varargin)
-    switch varargin{ii}
-        case 'ylog2'; xlim_current=get(H,'xlim');
-        case '+ylog2'; xlim_current=get(H,'xlim');
-        case '-ylog2'; xlim_current=get(H,'xlim');
+% Case ylog2 and the x-range to adjust to is specified as the last argument
+for ii = 1:length(args_in)
+    if strcmpi(args_in{ii},'ylog2') | strcmpi(args_in{ii},'+ylog2') | strcmpi(args_in{ii},'-ylog2') 
+        if length(args_in)==(ii+1)
+            x_range=args_in{ii+1};
+            args_in=args_in(1:ii);
+            xlim_current=get(H,'xlim');
+            break
+        else
+            x_range=get(H,'xlim');
+        end
+    end
+end
+
+for ii = 1:length(args_in)
+    switch args_in{ii}
         case 'keepx'; xlim_current=get(H,'xlim');
         case 'keepy'; ylim_current=get(H,'ylim');
         case 'keepz'; zlim_current=get(H,'zlim');
@@ -78,11 +90,11 @@ end
 
 axis(H,'tight');
 
-for ii = 1:length(varargin)
-    if P(ii)==0 & ~strcmpi(varargin{ii},'x0') & ~strcmpi(varargin{ii},'y0')
+for ii = 1:length(args_in)
+    if P(ii)==0 & ~strcmpi(args_in{ii},'x0') & ~strcmpi(args_in{ii},'y0')
         continue; end
 
-    switch varargin{ii}
+    switch args_in{ii}
         case 'x'
             set_tight_axis('xlim',P(ii));
         case 'y'
@@ -109,11 +121,11 @@ for ii = 1:length(varargin)
         case 'zlog'
             set_tight_zlog('zlog',P(ii));
      	case 'ylog2'
-            set_tight_ylog_range(xlim_current,P(ii));
+            set_tight_ylog_range(x_range,P(ii));
         case '+ylog2'
-            set_tight_ylog_range(xlim_current,[0 P(ii)]);
+            set_tight_ylog_range(x_range,[0 P(ii)]);
         case '-ylog2'
-            set_tight_ylog_range(xlim_current,[P(ii) 0]);
+            set_tight_ylog_range(x_range,[P(ii) 0]);
     	case 'x0'
             set_tight_x0('xlim',P(ii));
      	case 'y0'
@@ -125,8 +137,8 @@ for ii = 1:length(varargin)
     end
 end
 
-for ii = 1:length(varargin)
-    switch varargin{ii}
+for ii = 1:length(args_in)
+    switch args_in{ii}
         case 'keepx'; set(H,'xlim',xlim_current);
         case 'keepy'; set(H,'ylim',ylim_current);
         case 'keepz'; set(H,'zlim',zlim_current);
@@ -224,28 +236,28 @@ end
 
     	if length(Pax)==1; Pax=Pax*[1 1]; end
 
-    	HgetChildren=get(H,'Children');
+    	hc=get(H,'Children');
 
-        for k=1:size(HgetChildren,1)
+        for k=1:size(hc,1)
 
-            htype=get(HgetChildren(k),'type');
+            htype=get(hc(k),'type');
 
             if ~strcmpi(htype,'line')
                 min_y(k)=NaN; max_y(k)=NaN;
                 continue
             end
 
-            Hxdata=HgetChildren(k).XData;
-            Hydata=HgetChildren(k).YData;
+            xdata=hc(k).XData;
+            ydata=hc(k).YData;
 
-            Hydata(isinf(Hydata))=NaN;
-            Hydata(Hydata==0)=NaN;
+            ydata(isinf(ydata))=NaN;
+            ydata(ydata==0)=NaN;
 
-            [~,ind_low(k)]=min(abs(x_range(1)-Hxdata));
-            [~,ind_high(k)]=min(abs(x_range(2)-Hxdata));
+            [~,ind_low(k)]=min(abs(x_range(1)-xdata));
+            [~,ind_high(k)]=min(abs(x_range(2)-xdata));
 
-            min_y(k)=min(Hydata(ind_low(k):ind_high(k)));
-            max_y(k)=max(Hydata(ind_low(k):ind_high(k)));
+            min_y(k)=min(ydata(ind_low(k):ind_high(k)));
+            max_y(k)=max(ydata(ind_low(k):ind_high(k)));
         end
 
         min_y(min_y==0)=[];
