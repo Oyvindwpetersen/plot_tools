@@ -29,9 +29,9 @@ end
 for k=1:length(hax0)
 
 	if strcmpi(get(hax0(k),'Visible'),'on')
-		isVisible(k)=true;
+		is_visible(k)=true;
 	else
-		isVisible(k)=false;
+		is_visible(k)=false;
 	end
 	
 	pos=get(hax0(k),'Position');
@@ -46,7 +46,7 @@ end
 pos_x=pos_x(ind_sort_y);
 pos_y=pos_y(ind_sort_y);
 hax0=hax0(ind_sort_y);
-isVisible=isVisible(ind_sort_y);
+is_visible=is_visible(ind_sort_y);
 
 %% Sort
 
