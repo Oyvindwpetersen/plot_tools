@@ -53,6 +53,11 @@ ylabel(yl);
 xlabel(xl);
 
 axistight(gca,[0.05 0.05 0.05],'x','y','z')
+
+axis equal
+xlim([1-0.5 n2+0.5]);
+ylim([1-0.5 n1+0.5]);
+
 view([-25 35]);
 
 if strcmpi(logaxis,'yes')
