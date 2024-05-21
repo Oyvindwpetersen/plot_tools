@@ -26,6 +26,7 @@ addParameter(p,'view',[40 15],@isnumeric)
 addParameter(p,'cbar',[0.5 1 0 0],@isnumeric) % Set to NaN to turn off colorbar
 addParameter(p,'xtick',[],@isnumeric)
 addParameter(p,'ytick',[],@isnumeric)
+addParameter(p,'interpreter','latex',@ischar)
 
 parse(p,varargin{1:end});
 
@@ -41,6 +42,7 @@ viewvec=p.Results.view;
 cbar=p.Results.cbar;
 xtick=p.Results.xtick;
 ytick=p.Results.ytick;
+interpreter=p.Results.interpreter;
 
 %%
 
@@ -86,9 +88,9 @@ end
 
 view(viewvec);
 
-xlabel(xlab);
-ylabel(ylab);
-zlabel(zlab);
+xlabel(xlab,'interpreter',interpreter);
+ylabel(ylab,'interpreter',interpreter);
+zlabel(zlab,'interpreter',interpreter);
 
 axistight(gca,[0 0 0],'x','y','z');
 
