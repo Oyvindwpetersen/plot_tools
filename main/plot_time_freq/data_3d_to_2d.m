@@ -26,9 +26,9 @@ function [y_out,parameter_struct]=data_3d_to_2d(y,parameter_struct)
 % y_out: cell with 2d y-data
 % parameter_struct: updated struct with plotting parameters
 %
-%% Desired plotting layout 
+%% Desired plotting layout when auto elements are plotted
 
-Matrix_nSignal_nh_nw=[
+matrix_nSignal_nh_nw=[
     1 1 1 ;
     2 1 2 ;
     3 1 3 ;
@@ -61,7 +61,7 @@ if strcmpi(parameter_struct.type,'auto')
     nSources=length(y_out);
     
 	if ~isfield(parameter_struct,'nh')
-        if nSignals<=10; parameter_struct.nh=Matrix_nSignal_nh_nw(nSignals,2); parameter_struct.nw=Matrix_nSignal_nh_nw(nSignals,3); 
+        if nSignals<=10; parameter_struct.nh=matrix_nSignal_nh_nw(nSignals,2); parameter_struct.nw=matrix_nSignal_nh_nw(nSignals,3); 
         else; parameter_struct.nh=ceil(sqrt(nSignals)); parameter_struct.nw=ceil(nSignals/parameter_struct.nh);
         end
     end
@@ -85,8 +85,6 @@ if strcmpi(parameter_struct.type,'auto')
             
     end
     
-    
-        
 end
 
 %% All elements
