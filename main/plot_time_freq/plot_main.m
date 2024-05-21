@@ -3,7 +3,7 @@ function varargout=plot_main(x,y,varargin)
 %%
 
 p=inputParser;
-% p.KeepUnmatched=true;
+p.KeepUnmatched=true;
 
 addParameter(p,'Displayname',{})
 addParameter(p,'legendshow',true)
@@ -56,7 +56,6 @@ marg_w=p.Results.marg_w;
 
 comp=p.Results.comp;
 cut=p.Results.cut;
-% type=p.Results.type; % Not used, 'all' or 'auto' handled outside in 3d to 2d function
 
 log=p.Results.log;
 button=p.Results.button;
