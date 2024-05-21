@@ -28,8 +28,11 @@ for k=1:length(x)
     x_freq{k}(ind_del)=[];
     y_freq{k}(:,ind_del)=[];
     
-    y_freq{k}=abs(y_freq{k});    
-    
+    y_freq{k}=abs(y_freq{k});
+
+    if isfield(parameter_struct,'unit') & strcmpi(parameter_struct.unit,'rad/s')
+        x_freq{k}=x_freq{k}*2*pi;
+    end
 end
 
 [ha hp]=plot_main(x_freq,y_freq,parameter_struct);
