@@ -1,4 +1,4 @@
-function limall(var,var_limit,hfig)
+function limall(var,var_limit,h_handle)
 
 %% Set limit to multiple axes
 %
@@ -20,19 +20,16 @@ elseif strcmpi(var,'z')
 end
 
 if nargin<3
-    hfig=gcf;
+    h_handle=gcf;
 end
 
-if isnumeric(hfig)
-    for j=1:length(hfig)
-        ha=getsortedaxes(figure(hfig(j)));
-        for k=1:length(ha)
-            set(ha(k),limname,var_limit);
-        end
-    end
-else
-    ha=getsortedaxes(hfig);
-    for k=1:length(ha)
-        set(ha(k),limname,var_limit);
-    end
+if strcmp(get(h_handle(1),'type'),'axes')
+    ha=h_handle;
+elseif strcmp(get(h_handle(1),'type'),'figure')
+    ha=getsortedaxes(h_handle);
 end
+
+for k=1:length(ha)
+    set(ha(k),limname,var_limit);
+end
+
