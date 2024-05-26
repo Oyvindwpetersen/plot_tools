@@ -13,7 +13,7 @@ function legendadjust(pos,xy_adjust,ncol,ItemTokenSize)
 %% Default inputs
 
 if nargin<4
-    ItemTokenSize=[];
+    ItemTokenSize=[20];
 end
 
 if nargin<3
@@ -41,52 +41,55 @@ end
 
 %%
 
-% if nargin==0
-%     pos='east'; xy_adjust=[0 0];
-% elseif nargin==1
-% 	pos=varargin{1};
-% 	xy_adjust=[0 0];
-% elseif nargin==2
-%    pos=varargin{1};
-%    xy_adjust=varargin{2};
-% end
-
-%%
-
 hGetAxes=get(gcf,'Children');
 
 for k=1:length(hGetAxes)
-    
+
     if ~strcmpi(hGetAxes(k).Type,'axes'); continue; end
-    
+
     if isempty(hGetAxes(k).Legend); continue; end
-    
+
     hLeg=hGetAxes(k).Legend;
-    
-    axesPos=hGetAxes(k).Position; % [left bottom width height]
-   	
-    xy_LU_axes=[axesPos(1) axesPos(2)+axesPos(4)]; % Left upper corner
-    xy_RU_axes=[axesPos(1)+axesPos(3) axesPos(2)+axesPos(4)]; % Right upper corner
-    
-    if strcmpi(pos,'east')
-    set(hLeg,'Location','NorthEast');
-   	legPos=hLeg.Position; % [left bottom width height]
-    xy_LU_leg=[xy_RU_axes(1)-axesPos(3)*0.2-legPos(3) xy_LU_axes(2)+0.03]; % [Right_corner_axes-0.2*axes_width-leg_width Top_axes+0.03]
-    elseif strcmpi(pos,'west')
-    set(hLeg,'Location','NorthWest');
-   	legPos=hLeg.Position;
-    xy_LU_leg=[xy_LU_axes(1)+axesPos(3)*0.1 xy_RU_axes(2)+0.03]; % [Left_corner_axes+0.1*axes_width-leg_width Top_axes+0.03]  
-    elseif strcmpi(pos,'mid')
-    set(hLeg,'Location','North');
-   	legPos=hLeg.Position;
-    xy_LU_leg=[xy_LU_axes(1)+axesPos(3)*0.1 xy_RU_axes(2)+0.03]; % [Left_corner_axes+0.1*axes_width-leg_width Top_axes+0.03] 
-    end    
-        
-	set(hLeg,'Position',[xy_LU_leg(1)+xy_adjust(1) xy_LU_leg(2)+xy_adjust(2) legPos(3) legPos(4)],...
-    'NumColumns',ncol);
 
     if ~isempty(ItemTokenSize)
         hLeg.ItemTokenSize=ItemTokenSize;
     end
+    
+    set(hLeg,'NumColumns',ncol);
+    set(hLeg,'Units','normalized');
+
+    axesPos=hGetAxes(k).Position; % [left bottom width height]
+
+    xy_LU_axes=[axesPos(1) axesPos(2)+axesPos(4)]; % Left upper corner
+    xy_RU_axes=[axesPos(1)+axesPos(3) axesPos(2)+axesPos(4)]; % Right upper corner
+
+    if strcmpi(pos,'east')
+        set(hLeg,'Location','NorthEast');
+       	legPos=hLeg.Position; % [left bottom width height]
+        xy_LU_leg=[xy_RU_axes(1)-axesPos(3)*0.2-legPos(3) xy_LU_axes(2)+0.03]; % [Right_corner_axes-0.2*axes_width-leg_width Top_axes+0.03]
+    elseif strcmpi(pos,'west')
+        set(hLeg,'Location','NorthWest');
+       	legPos=hLeg.Position;
+        xy_LU_leg=[xy_LU_axes(1)+axesPos(3)*0.1 xy_RU_axes(2)+0.03]; % [Left_corner_axes+0.1*axes_width-leg_width Top_axes+0.03]
+    elseif strcmpi(pos,'mid')
+        set(hLeg,'Location','North');
+       	legPos=hLeg.Position;
+        xy_LU_leg=[xy_LU_axes(1)+axesPos(3)*0.1 xy_RU_axes(2)+0.03]; % [Left_corner_axes+0.1*axes_width-leg_width Top_axes+0.03]
+    elseif strcmpi(pos,'west2')
+        set(hLeg,'NumColumns',length(hLeg.String));
+        set(hLeg,'Location','northwestoutside');
+       	legPos=hLeg.Position;
+        xy_LU_leg=[xy_LU_axes(1) xy_RU_axes(2)]; % [Left_corner_axes+0.1*axes_width-leg_width Top_axes+0.03]
+
+        set(hLeg,'Position',[xy_LU_leg(1)+xy_adjust(1) xy_LU_leg(2)+xy_adjust(2) legPos(3) legPos(4)]);
+        continue
+    else
+        continue
+        % set(hLeg,'Position',[xy_LU_leg(1)+xy_adjust(1) xy_LU_leg(2)+xy_adjust(2) legPos(3) legPos(4)]);
+    end
+
+    set(hLeg,'Position',[xy_LU_leg(1)+xy_adjust(1) xy_LU_leg(2)+xy_adjust(2) legPos(3) legPos(4)],...
+        'NumColumns',ncol);
+
 
 end
