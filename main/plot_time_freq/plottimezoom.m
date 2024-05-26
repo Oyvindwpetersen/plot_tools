@@ -82,7 +82,7 @@ end
 [~,pos]=tight_subplot(length(h_ax1),2,gap,marg_h,marg_w,[],weight_w,[],true);
 
 ha_ori=getsortedaxes(gcf);
-ha= gobjects(1,length(ha_ori)*2);
+ha=gobjects(1,length(ha_ori)*2);
 ha(1:2:length(ha_ori)*2)=ha_ori;
 
 for k=1:2:length(pos)
@@ -93,16 +93,13 @@ for k=2:2:length(pos)
     ha(k) = axes('Units','normalized','Position',pos{k});
 end
 
-
 copyaxescontent(ha(1:2:end),ha(2:2:end),false,false);
-
 
 % Turn off ylabel
 for k=2:2:length(ha)
     YLabelProp=get(ha(k),'YLabel');
     set(YLabelProp,'Visible','off');
 end
-
 
 for k=1:2:length(ha)
 
@@ -133,7 +130,4 @@ for k=2:2:length(ha)
     end
     axistight(ha(k),[0 0.05],'x','y');
 end
-
-
-
 
