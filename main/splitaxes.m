@@ -12,7 +12,7 @@ function ha_new=splitaxes(ha_split,direction,gap_h,gap_w)
 %
 %%
 
-PositionOriginal=get(ha_split,'Position');
+pos_original=get(ha_split,'Position');
 
 if isempty(gap_h)
     gap_h=0.1;
@@ -23,10 +23,10 @@ if isempty(gap_h)
 end
 
 if strcmpi(direction,'vertical')
-    Ly_new=(PositionOriginal(4)-gap_h)/2;
+    Ly_new=(pos_original(4)-gap_h)/2;
     
-    Position1=[PositionOriginal(1) PositionOriginal(2)+Ly_new+gap_h PositionOriginal(3) Ly_new];
-    Position2=[PositionOriginal(1) PositionOriginal(2) PositionOriginal(3) Ly_new];
+    pos1=[pos_original(1) pos_original(2)+Ly_new+gap_h pos_original(3) Ly_new];
+    pos2=[pos_original(1) pos_original(2) pos_original(3) Ly_new];
     
 end
 
@@ -34,8 +34,8 @@ if strcmpi(direction,'horizontal')
     error('not implemented yet: horizontal split')
 end
 
-set(ha_split,'Position',Position1);
+set(ha_split,'Position',pos1);
 
 ha_new(1)=ha_split;
-ha_new(2)=axes('Units','normalized','Position',Position2);
+ha_new(2)=axes('Units','normalized','Position',pos2);
 
