@@ -17,7 +17,7 @@ if nargin<2
 end
 
 if nargin<3
-    add_top=true;
+    add_top=false;
 end
 
 %%
@@ -101,13 +101,41 @@ h_marg_cm=[0.8 0.8];
 w_marg_cm=[1.2 0.3];
 
 
+end
+
+%%
+
+if alt==3
+
+% 5 12.8
+% 4 10.4
+% 3 8
+% 2 5.6
+% 1 3.2
+
+% 3 16.5
+% 2 11
+% 1 6
+
+h_sub_cm=1.6;
+h_gap_cm=0.8;
+
+w_sub_cm=4.0;
+w_gap_cm=1.5;
+
+h_marg_cm=[0.8 0.8];
+w_marg_cm=[1.2 0.3];
+
+end
+
+
+%%
+
+
 if add_top
     h_marg_cm(2)=h_marg_cm(2)+0.4;
 end
 
-end
-
-%%
 
 h_cm_new=h_sub_cm*nh+h_gap_cm*(nh-1)+h_marg_cm(1)+h_marg_cm(2);
 
