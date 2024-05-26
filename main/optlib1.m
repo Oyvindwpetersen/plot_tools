@@ -4,7 +4,7 @@ function plotopt=optlib1(c,alt,add_top)
 %
 % Inputs:
 % c: [nh,nw]
-% alt: 1 or 2 
+% alt: alternative for config
 % add_top: if true, then 0.4 cm is added at top margin
 %
 % Outputs: none
@@ -27,7 +27,7 @@ plotopt.interpreter='latex';
 
 % marg_h=[0.1 0.1];
 % marg_w=[0.1 0.025];
-% % gap=[0.1 0.125];
+% gap=[0.1 0.125];
 % 
 % h_sub_cm=1.6;
 % h_gap_cm=0.8;
@@ -53,12 +53,14 @@ plotopt.interpreter='latex';
 
 if alt==1
 
+% nh cm
 % 5 12.8
 % 4 10.4
 % 3 8
 % 2 5.6
 % 1 3.2
 
+% nw cm
 % 3 18
 % 2 12
 % 1 6
@@ -85,6 +87,7 @@ end
 
 if alt==2
 
+% nh cm
 % 5 18
 % 4 14.5
 % 3 11
@@ -107,12 +110,15 @@ end
 
 if alt==3
 
+
+% nh cm
 % 5 12.8
 % 4 10.4
 % 3 8
 % 2 5.6
 % 1 3.2
 
+% nw cm
 % 3 16.5
 % 2 11
 % 1 6
@@ -128,14 +134,11 @@ w_marg_cm=[1.2 0.3];
 
 end
 
-
 %%
-
 
 if add_top
     h_marg_cm(2)=h_marg_cm(2)+0.4;
 end
-
 
 h_cm_new=h_sub_cm*nh+h_gap_cm*(nh-1)+h_marg_cm(1)+h_marg_cm(2);
 
@@ -151,8 +154,6 @@ plotopt.marg_h=marg_h_new;
 plotopt.marg_w=marg_w_new;
 plotopt.gap=gap_new;
 
-
-
 %%
 
 % marg_h_new=h_marg_cm/h_cm_new;
@@ -164,7 +165,6 @@ plotopt.gap=gap_new;
 % plotopt.marg_h=marg_h_new;
 % plotopt.marg_w=marg_w_new;
 % plotopt.gap=gap_new;
-
 
 %%
 
@@ -185,7 +185,6 @@ plotopt.gap=gap_new;
 % 
 % h_marg_cm=marg_h*8;
 % w_marg_cm=marg_w*12;
-% 
 % 
 % if c(1)==2 %& a==5.6
 %     h_cm_new=h_sub_cm*2+h_gap_cm*1+h_marg_cm(1)+h_marg_cm(2);
@@ -227,13 +226,6 @@ plotopt.gap=gap_new;
 % 
 % end
 
-%%
-
-
-% old
-% 
-% 
-% 
 % %%
 % 
 % 
