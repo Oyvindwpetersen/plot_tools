@@ -21,10 +21,6 @@ if nargin<4
     dx=0;
 end
 
-
-ax=1-scale_x;
-ay=1-scale_y;
-
 Temp=hc.Position;
 % [start_x start_y Lx Ly];
 
@@ -33,9 +29,15 @@ start_y=Temp(2);
 Lx=Temp(3);
 Ly=Temp(4);
 
-Temp2=[ start_x+ax*Lx+dx ...
-        start_y+ay*Ly+dy ...
-        Lx-ax*Lx  ...
-        Ly-ay*Ly];
+xc=start_x+Lx/2;
+yc=start_y+Ly/2;
+
+start_x2=xc-Lx*scale_x/2;
+start_y2=yc-Ly*scale_y/2;
+
+Temp2=[ start_x2+dx ...
+        start_y2+dy ...
+        Lx*scale_x  ...
+        Ly*scale_y];
 
 hc.Position=Temp2;
