@@ -27,6 +27,12 @@ addParameter(p,'cbar',[0.5 1 0 0],@isnumeric) % Set to NaN to turn off colorbar
 addParameter(p,'xtick',[],@isnumeric)
 addParameter(p,'ytick',[],@isnumeric)
 addParameter(p,'interpreter','latex',@ischar)
+addParameter(p,'xlpos',[0 0 0],@isnumeric)
+addParameter(p,'xlog',false,@islogical)
+addParameter(p,'ylog',false,@islogical)
+
+addParameter(p,'markercolor',[0.5 0.5 0.5],@isnumeric)
+addParameter(p,'markersize',[],@isnumeric)
 
 parse(p,varargin{1:end});
 
@@ -43,6 +49,12 @@ cbar=p.Results.cbar;
 xtick=p.Results.xtick;
 ytick=p.Results.ytick;
 interpreter=p.Results.interpreter;
+xlpos=p.Results.xlpos;
+doxlog=p.Results.xlog;
+doylog=p.Results.ylog;
+
+markercolor=p.Results.markercolor;
+markersize=p.Results.markersize;
 
 %%
 
@@ -60,6 +72,18 @@ if size(x,1)~=size(f,1)
     error('x and f must have equal number of rows');
 end
 
+if doxlog
+    xlog;
+end
+
+if doylog
+    ylog;
+end
+
+% xlabel(xlab,'interpreter',interpreter);
+% ylabel(ylab,'interpreter',interpreter);
+% zlabel(zlab,'interpreter',interpreter);
+
 % Surf
 tri=delaunay(x(:,1),x(:,2));
 h_surf=trisurf(tri,x(:,1),x(:,2),f,'EdgeColor','none','FaceAlpha',facealpha,'DisplayName',displayname);
@@ -70,7 +94,13 @@ surfcell={tri,[x(:,1),x(:,2),f]};
 [h_iso,V]=IsoLine(surfcell,f,isolines,[0.5 0.5 0.5],linestyle);
 
 for k=1:length(h_iso)
+    if isnan(h_iso(k)); continue; end
+
     set(h_iso(k),'LineWidth',linewidth);
+end
+
+if ~isempty(markersize)
+    plot3(x(:,1),x(:,2),f,'o','color',markercolor,'markersize',markersize);
 end
 
 colormap(brewermap(100,'GnBu'));
@@ -88,9 +118,6 @@ end
 
 view(viewvec);
 
-xlabel(xlab,'interpreter',interpreter);
-ylabel(ylab,'interpreter',interpreter);
-zlabel(zlab,'interpreter',interpreter);
 
 axistight(gca,[0 0 0],'x','y','z');
 
@@ -102,4 +129,8 @@ if ~isempty(ytick)
     set(gca,'YTick',ytick);
 end
 
+h=get(gca,'XLabel'); set(h,'Position',h.Position+xlpos);
 
+xlabel(xlab,'interpreter',interpreter);
+ylabel(ylab,'interpreter',interpreter);
+zlabel(zlab,'interpreter',interpreter);
