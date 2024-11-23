@@ -1,4 +1,4 @@
-function plottime(varargin)
+function varoutout=plottime(varargin)
 
 %% Input handling
 
@@ -21,5 +21,7 @@ parameter_struct=mergestruct(parameter_struct_default,parameter_struct_in);
 
 [ha hp]=plot_main(x,y,parameter_struct);
 
-
+if nargout==1
+    varoutout{1}=ha;
+end
 
