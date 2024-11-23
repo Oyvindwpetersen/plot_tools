@@ -15,7 +15,7 @@ elseif isempty(size_arg)
     size_arg='big';
 end
 
-if isnumeric(size_arg);
+if isnumeric(size_arg)
     set(gcf,'Units', 'Normalized', 'OuterPosition', size_arg);
     return
 end
