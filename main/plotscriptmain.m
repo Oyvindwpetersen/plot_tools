@@ -16,6 +16,7 @@ addParameter(p,'labelsize',8,@isnumeric) %xlabel and ylabel
 addParameter(p,'ticksize',8,@isnumeric) %xticks and yticks
 addParameter(p,'legendsize',8,@isnumeric)
 addParameter(p,'legpos','east',@ischar)
+addParameter(p,'letter',[],@isnumeric)
 
 addParameter(p,'path','',@ischar) %folder to print to
 addParameter(p,'format','pdf')
@@ -43,6 +44,7 @@ labelsize=p.Results.labelsize;
 ticksize=p.Results.ticksize;
 legendsize=p.Results.legendsize;
 legpos=p.Results.legpos;
+letter=p.Results.letter;
 
 fpath=p.Results.path;
 format=p.Results.format;
@@ -165,6 +167,30 @@ set(hfig,'PaperPosition', [0 0 width height],'PaperSize',[width height]);
 
 %%
 
+
+
+if length(letter)==1 & isnan(letter)
+
+else
+    if isempty(letter)
+        dx0=-.8;
+        dy0=-0;
+    else
+        dx0=letter(1);
+        dy0=letter(2);
+    end
+    
+    rx0=dx0/width;
+    ry0=dy0/height;
+    
+    % Shift from lower left corner (ratio figure size 0 to 1)
+    rx=[rx0 0.5/width];
+    ry=[ry0-0.5/height 0.5/height];
+    
+    tight_subplot_letter(gcf,labelsize,rx,ry,[],'()');
+
+end
+
 if strcmpi(legpos,'east')
     drawnow();
     [current_pos_fig,current_pos_leg,h_leg]=legendtop(height,width);
@@ -198,6 +224,7 @@ for k=1:length(format)
 end
 
 %%
+
 if ~isempty(h_leg)
     set(gcf,'Position',current_pos_fig);
 end
