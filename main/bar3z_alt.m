@@ -1,4 +1,4 @@
-function ha=bar3z_alt(A,varargin)
+function [hs,hc]=bar3z_alt(A,varargin)
 
 %% 3D bar chart
 %
@@ -16,12 +16,16 @@ addParameter(p,'YTickLabel','',@iscell)
 addParameter(p,'XTickLabel','',@iscell)
 addParameter(p,'xlabel','',@ischar) %Column
 addParameter(p,'ylabel','',@ischar) %Row
-addParameter(p,'FontSize',6,@isnumeric)
-addParameter(p,'log','no',@ischar)
+addParameter(p,'fontsize',6,@isnumeric)
+addParameter(p,'log',false,@islogical)
 addParameter(p,'view',[220 60],@isnumeric)
 addParameter(p,'colorbar',true,@islogical)
 addParameter(p,'colormap','GnBu',@ischar)
 addParameter(p,'clim',[],@isnumeric)
+addParameter(p,'text',false,@islogical)
+addParameter(p,'hax',[])
+addParameter(p,'cbarscale',[0.75 0.75],@isnumeric)
+addParameter(p,'bar',false,@isnumeric)
 
 parse(p,varargin{:})
 
@@ -29,12 +33,16 @@ XTickLabel=p.Results.XTickLabel;
 YTickLabel=p.Results.YTickLabel;
 xl=p.Results.xlabel;
 yl=p.Results.ylabel;
-FontSize=p.Results.FontSize;
+fontsize=p.Results.fontsize;
 logaxis=p.Results.log;
 view_angle=p.Results.view;
 colorbar_logic=p.Results.colorbar;
 colormap_scheme=p.Results.colormap;
 clim=p.Results.clim;
+text=p.Results.text;
+hax=p.Results.hax;
+cbarscale=p.Results.cbarscale;
+do_bar=p.Results.bar;
 
 %%
 [n1,n2]=size(A);
@@ -49,14 +57,26 @@ end
 
 %%
 
-figure();
-ha=tight_subplot(1,1,[],[0.1 0.05],[0.0 0.05]);
+if isempty(hax)
+    figure();
+    hax=tight_subplot(1,1,[],[0.1 0.05],[0.0 0.05]);
+else
+    axes(hax);
+end
+% hold on;
 
-ha=bar3(A);
 
-for k=1:numel(ha)
-    zdata=get(ha(k),'Zdata');
-    
+warning('Functionality of bar3z_alt.m is moved to squares.m')
+
+%%
+if do_bar
+
+hs=bar3(A); tilefigs
+
+for k=1:numel(hs)
+
+    zdata=get(hs(k),'Zdata');
+
     z_col=zdata(2:6:end,2);
     
     cdata=NaN(6*numel(z_col),4);
@@ -73,84 +93,95 @@ for k=1:numel(ha)
             ind_del_nan=[ind_del_nan (i-1)*6+(1:6)];
         end
     end
+
+	set(hs(k),'Cdata',cdata,'facecolor','flat');
     
-	set(ha(k),'Cdata',cdata,'facecolor','flat');
-    
-    ind_del_nan_all{k}=ind_del_nan;
+    ind_del_all{k}=[ind_del_nan(:) ];
     cdata_all{k}=cdata;
 end
-    
 
-for k=1:numel(ha)
+for k=1:numel(hs)
 
-    if ~isempty(ind_del_nan_all{k})
-%         cdata=get(ha(k),'Cdata');
+    if ~isempty(ind_del_all{k})
+%         cdata=get(hs(k),'Cdata');
 
         cdata=cdata_all{k};
 
-        xdata=get(ha(k),'Xdata');
-        ydata=get(ha(k),'Ydata');
-        zdata=get(ha(k),'Zdata');
+        xdata=get(hs(k),'Xdata');
+        ydata=get(hs(k),'Ydata');
+        zdata=get(hs(k),'Zdata');
         
-        cdata(ind_del_nan_all{k},:)=[];
-        xdata(ind_del_nan_all{k},:)=[];
-        ydata(ind_del_nan_all{k},:)=[];
-        zdata(ind_del_nan_all{k},:)=[];
+        cdata(ind_del_all{k},:)=[];
+        xdata(ind_del_all{k},:)=[];
+        ydata(ind_del_all{k},:)=[];
+        zdata(ind_del_all{k},:)=[];
         
-        if isempty(xdata); delete(ha(k)); continue; end
+        if isempty(xdata); delete(hs(k)); continue; end
 
-        set(ha(k),'Xdata',xdata,'Ydata',ydata,'Zdata',zdata,'Cdata',cdata,'facecolor','flat');
+        set(hs(k),'Xdata',xdata,'Ydata',ydata,'Zdata',zdata,'Cdata',cdata,'facecolor','flat');
     end
 
 end
-
-% Turn on colorbar
-if colorbar_logic
-    hc=colorbar;
-    
-    % Set color scheme
-    [map,num,typ] = brewermap(100,colormap_scheme); colormap(map);
-    
-    % Scale colorbar smaller
-    colorbarpos(hc,0.75,0.75);
-    
-    % Adjust min/max limits
-    if ~isempty(clim)
-        set(hc,'Limits',clim);
-    end
-    
-end
-
-
 
 for k1=1:size(A,1)
-for k2=1:size(A,1)
-    
+for k2=1:size(A,2)
+        
     zz=max(max(A));
     
     if isnan(A(k1,k2))
-        str='N/A';
+        % str='N/A';
+        continue
     else
         str=num2str(A(k1,k2),'%0.2f');
     end
-        
-    text(k1,k2,zz,str,'HorizontalAlignment','center','color',[0 0.8 0.3],'fontsize',4,...
+    
+    if text==true
+         text(k2,k1,zz,str,'HorizontalAlignment','center','color',[0 0.8 0.3],'fontsize',4,...
         'BackgroundColor','none','Margin',0.1);
+    end
 
-    
-%     surf(X, Y, +Z(X,Y,-4), 'FaceColor','g', 'FaceAlpha',0.5, 'EdgeColor','none')
-
-    
+    hold on;
+    % plot3(k2,k1,A(k1,k2),'Marker','o','LineStyle','None');
     
 end
 end
 
+end
+
+%%
+
+if do_bar==false
+
+hs=[];
+
+delta=0.4;
+
+for k1=1:size(A,1)
+    for k2=1:size(A,1)
+
+        % a=A(k1,k2);
+        % Corner points
+        x = [k1-delta k1+delta k1+delta k1-delta];
+        y = [k2-delta k2-delta k1+delta k1+delta];
+        z = [0 0 0 0];
+
+        patch('XData', x, 'YData', y, 'ZData', z, ...
+        'FaceColor','blue','EdgeColor','black');
+
+    end
+end
+
+end
+
+
+
+%%
 
 set(gca,'XTick',[1:n2]);
 set(gca,'YTick',[1:n1]);
 
-set(gca,'XTickLabel',XTickLabel,'fontsize',FontSize)
-set(gca,'YTickLabel',YTickLabel,'fontsize',FontSize)
+set(gca,'XTickLabel',XTickLabel,'fontsize',fontsize)
+set(gca,'YTickLabel',YTickLabel,'fontsize',fontsize)
 set(gca,'TickLabelInterpreter','latex');
 
 ylabel(yl);
@@ -167,10 +198,33 @@ s=get(gca,'DataAspectRatio');
 s_new=[ 1 1 1/(s(3)*mean(s(1:2)))];
 set(gca,'DataAspectRatio',s_new);
 
-if strcmpi(logaxis,'yes')
+if logaxis
     set(gca,'ZScale','log');
     axistight(gca,[0 0 0.05],'keepx','keepy','zlog');
 end
+
+
+
+% Turn on colorbar
+if colorbar_logic
+    hc=colorbar;
+    
+    % Set color scheme
+    [map,num,typ] = brewermap(100,colormap_scheme); colormap(map);
+    
+    % Scale colorbar smaller
+    % if length(cbarscale)==2; cbarscale(3:4)=0; end
+    % colorbarpos(hc,cbarscale(1),cbarscale(2),cbarscale(3),cbarscale(4));
+    
+    % Adjust min/max limits
+    if ~isempty(clim)
+        set(hc,'Limits',clim);
+    end
+    
+end
+
+colorbarpos2(gca)
+
 
 dcm=datacursormode(gcf);
 datacursormode on
