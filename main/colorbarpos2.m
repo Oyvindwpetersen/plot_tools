@@ -1,4 +1,4 @@
-function colorbarpos2(h_handle)
+function colorbarpos2(h_handle,b,h)
 
 %% Scale down size of color bar
 %
@@ -13,6 +13,15 @@ if nargin<1
     h_handle=gcf;
 end
 
+if nargin<2
+    b=[];
+end
+
+if nargin<3
+    h=[];
+end
+
+
 hax=gethandle(h_handle);
 
 for k=1:length(hax)
@@ -24,13 +33,21 @@ for k=1:length(hax)
     units=get(hax(k),'Units');
 
     % Set to right of figure, upper half 
-    
+    if isempty(b)
+        Lx_cbar=0.025;
+    else
+        % Lx= something b
+    end
+
+    if isempty(h)
+        h=0.5;
+    end
+
+    Ly_cbar=[pos(4)*h];
+ 
     x0=pos(1)+pos(3);
-    y0=pos(2)+pos(4)/2;
+    y0=pos(2)+pos(4)-Ly_cbar;   
 
-    Lx=0.025;
-    Ly=[pos(4)/2];
-
-    hc.Position=[x0 y0 Lx Ly];
+    hc.Position=[x0 y0 Lx_cbar Ly_cbar];
 
 end
