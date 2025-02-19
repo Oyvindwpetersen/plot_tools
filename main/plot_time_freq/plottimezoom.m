@@ -77,8 +77,6 @@ end
 
 %%
 
-% figure();
-
 [~,pos]=tight_subplot(length(h_ax1),2,gap,marg_h,marg_w,[],weight_w,[],true);
 
 ha_ori=getsortedaxes(gcf);
